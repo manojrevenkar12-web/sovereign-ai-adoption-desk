@@ -10,4 +10,5 @@ web/test-results/
 web/playwright-report/
 *.pem
 .env
-e2e/.tokens.json
+web/e2e/.tokens.json
+reports/heldout/*/latest.json
