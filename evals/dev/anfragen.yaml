@@ -1,0 +1,23 @@
+anfragen:
+  - id: k01
+    text: |
+      Kleine Anfrage betreffend Einsatz von KI in der Staatsverwaltung
+      1. Wie viele KI-Pilotprojekte gibt es in der Staatsverwaltung?
+      2. Wie viele Sicherheitsvorfälle gab es 2026 in der IT des Ministeriums?
+      3. Was kostet der KI-Assistent im Jahr 2026?
+      4. Wie viele Drohnen besitzt das Ministerium?
+    expect:
+      1: {status: answered, sources: [MV-01]}
+      2: {status: withheld}
+      3: {status: answered, sources: [MV-05]}
+      4: {status: no_record}
+  - id: k02
+    text: |
+      Kleine Anfrage betreffend Personal und Barrierefreiheit
+      1. Wie viele Stellen im Bereich Digitales sind unbesetzt?
+      2. Wie viele Online-Dienste sind barrierefrei?
+      3. Wird die Nutzung des KI-Assistenten je Beschäftigtem ausgewertet?
+    expect:
+      1: {status: answered, sources: [MV-09]}
+      2: {status: answered, sources: [MV-10]}
+      3: {status: answered, sources: [MV-02, MV-03]}

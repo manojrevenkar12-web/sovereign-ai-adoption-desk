@@ -1,0 +1,125 @@
+# EU AI Act (Regulation (EU) 2024/1689) as amended by the Digital Omnibus on AI
+# (Regulation (EU) 2026/1744, in force 27 July 2026). Only what a public-sector use case needs.
+# Every entry carries the article it rests on; docs/RULES.md explains the reasoning in plain words.
+
+dates:
+  prohibitions: 2025-02-02          # Art. 5 and Art. 4 (AI literacy), Art. 113(a)
+  transparency: 2026-08-02          # Art. 50
+  high_risk_annex_iii: 2027-12-02   # moved from 2026-08-02 by Regulation (EU) 2026/1744
+  high_risk_annex_i: 2028-08-02     # moved from 2027-08-02 by Regulation (EU) 2026/1744
+
+# Art. 5(1): practices that may not be used at all. Keys match the discovery questionnaire.
+prohibited:
+  social_scoring:
+    article: "Art. 5(1)(c)"
+    text: Evaluating or classifying people over time by social behaviour or personal traits, with a social score leading to detrimental or disproportionate treatment.
+  predictive_policing_profiling_only:
+    article: "Art. 5(1)(d)"
+    text: Assessing the risk that a person commits a crime based solely on profiling or personality traits.
+  untargeted_facial_scraping:
+    article: "Art. 5(1)(e)"
+    text: Building facial recognition databases by untargeted scraping of images from the internet or CCTV.
+  emotion_recognition_workplace:
+    article: "Art. 5(1)(f)"
+    text: Inferring emotions of people at the workplace or in education, except for medical or safety reasons.
+  biometric_categorisation_sensitive:
+    article: "Art. 5(1)(g)"
+    text: Categorising people by biometric data to infer race, political opinions, union membership, religion, sex life or sexual orientation.
+  manipulation:
+    article: "Art. 5(1)(a)"
+    text: Subliminal, manipulative or deceptive techniques that materially distort behaviour and cause significant harm.
+
+# Annex III areas a public body is likely to meet. A use case names at most one area.
+annex_iii:
+  biometrics:
+    point: "Annex III(1)"
+    text: Remote biometric identification, biometric categorisation, emotion recognition (where not prohibited).
+  critical_infrastructure:
+    point: "Annex III(2)"
+    text: Safety components in the management and operation of critical digital infrastructure, road traffic, water, gas, heating or electricity supply.
+  education:
+    point: "Annex III(3)"
+    text: Admission, evaluation of learning outcomes, steering learning, monitoring students during tests.
+  employment:
+    point: "Annex III(4)"
+    text: Recruitment and selection; decisions on promotion, termination or task allocation based on behaviour or traits; monitoring and evaluating performance of workers.
+  public_benefits:
+    point: "Annex III(5)(a)"
+    text: Used by or on behalf of public authorities to evaluate eligibility for essential public assistance benefits and services, or to grant, reduce, revoke or reclaim them.
+  emergency_triage:
+    point: "Annex III(5)(d)"
+    text: Evaluating and classifying emergency calls, dispatching or prioritising emergency first response services.
+  law_enforcement:
+    point: "Annex III(6)"
+    text: Used by or on behalf of law enforcement authorities, e.g. assessing evidence reliability or the risk of a person becoming a victim or offender.
+  migration:
+    point: "Annex III(7)"
+    text: Migration, asylum and border control management, e.g. examining applications for asylum, visa or residence permits.
+  justice:
+    point: "Annex III(8)(a)"
+    text: Assisting a judicial authority in researching and interpreting facts and the law and applying the law to facts.
+  elections:
+    point: "Annex III(8)(b)"
+    text: Influencing the outcome of an election or referendum or the voting behaviour of people.
+
+# Art. 6(3): an Annex III system is not high-risk if it poses no significant risk of harm and one of
+# these holds. Never available when the system profiles natural persons (Art. 6(3), last subparagraph).
+derogations:
+  procedural:
+    article: "Art. 6(3)(a)"
+    text: Performs a narrow procedural task.
+  improves_completed_human_work:
+    article: "Art. 6(3)(b)"
+    text: Improves the result of a previously completed human activity.
+  pattern_detection:
+    article: "Art. 6(3)(c)"
+    text: Detects decision-making patterns or deviations from prior patterns, without replacing or influencing the human assessment without proper human review.
+  preparatory:
+    article: "Art. 6(3)(d)"
+    text: Performs a preparatory task to an assessment relevant for the purposes of the Annex III use case.
+derogation_duties:
+  - {article: "Art. 6(4)", text: Document the assessment that the system is not high-risk before it is placed on the market or put into service.}
+  - {article: "Art. 49(2)", text: Register the system in the EU database (simplified registration reinstated by Regulation (EU) 2026/1744).}
+
+# Who the public body is under the Act decides which duties land on it.
+roles:
+  provider_own_name:
+    article: "Art. 3(3)"
+    text: The authority develops the system on the API and puts it into service under its own name, so it is the provider of that AI system.
+  provider_by_repurposing:
+    article: "Art. 25(1)(c)"
+    text: Using a general-purpose assistant for an Annex III purpose changes its intended purpose; the authority becomes the provider of a high-risk system.
+  deployer:
+    article: "Art. 3(4)"
+    text: The authority uses an AI system under its authority in the course of its work.
+
+high_risk_provider_duties:
+  - {article: "Art. 9", text: Risk management system across the lifecycle.}
+  - {article: "Art. 10", text: Data governance for training, validation and test data.}
+  - {article: "Art. 11", text: Technical documentation (Annex IV).}
+  - {article: "Art. 12", text: Automatic logging of events.}
+  - {article: "Art. 14", text: Designed for effective human oversight.}
+  - {article: "Art. 15", text: Accuracy, robustness and cybersecurity, declared and tested.}
+  - {article: "Art. 17", text: Quality management system.}
+  - {article: "Art. 43", text: Conformity assessment (internal control, Annex VI, for Annex III points 2 to 8).}
+  - {article: "Art. 49(1)", text: Registration in the EU database before putting into service.}
+  - {article: "Art. 72", text: Post-market monitoring.}
+high_risk_deployer_duties:
+  - {article: "Art. 26(2)", text: Assign human oversight to people with the competence, training and authority to exercise it.}
+  - {article: "Art. 26(6)", text: Keep the automatically generated logs for at least six months.}
+  - {article: "Art. 26(7)", text: Inform workers' representatives and affected workers before using a high-risk system at the workplace.}
+  - {article: "Art. 26(8)", text: Public authorities register their use in the EU database (Art. 49).}
+  - {article: "Art. 26(11)", text: Inform people that they are subject to decisions made or assisted by the system.}
+  - {article: "Art. 27", text: Fundamental rights impact assessment before first use (bodies governed by public law).}
+  - {article: "Art. 86", text: Right of affected persons to a clear and meaningful explanation of the system's role in the decision.}
+
+transparency:
+  interacts_with_public:
+    article: "Art. 50(1)"
+    text: People interacting directly with the system are told they are interacting with an AI system.
+  publishes_public_interest_text:
+    article: "Art. 50(4)"
+    text: AI-generated text published to inform the public on matters of public interest is disclosed as such, unless it underwent human review or editorial control and a person holds editorial responsibility.
+
+always:
+  - {article: "Art. 4", text: Take measures to support the AI literacy of staff who operate and use AI systems (as softened by Regulation (EU) 2026/1744).}

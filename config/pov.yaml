@@ -1,0 +1,23 @@
+# Proof-of-value runtime settings.
+retrieval:
+  k: 4
+  answer_floor: 5.5      # retrieval score below which a passage does not answer the question
+  relative: 0.6          # the stand-in keeps passages scoring at least this share of the best one
+  min_coverage: 0.3      # share of the question's content words the passages must contain to count as an answer
+verification:
+  support_share: 0.6     # share of a statement's content words that must appear in its cited passages
+# Query expansion for everyday words citizens and MPs use for administrative terms (normalised forms).
+synonyms:
+  meld: [mitteil, anzeig]
+  ausgezog: [auszieh, auszug]
+  umgezog: [umzieh, umzug]
+  kost: [ausgab, preis]
+  koste: [ausgab, kost]
+  geld: [zahlung, betrag]
+  vermiet: [vermieter]
+  student: [studier, ausbild]
+  dauer: [bearbeit]
+  frist: [monat]
+  telefon: [erreichbar, anruf]
+  bekomm: [erhalt]
+  zeit: [frist]

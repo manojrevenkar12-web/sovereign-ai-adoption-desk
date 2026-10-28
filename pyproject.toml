@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sovereign-ai-adoption-desk"
+version = "0.1.0"
+description = "Take public-sector AI use cases from discovery to production: gates, critical path, architecture, proofs of value, approved scope at runtime, adoption."
+requires-python = ">=3.12"
+dependencies = [
+  "openai-agents==0.24.0",
+  "openai==3.40.0",
+  "mcp==2.3.0",
+  "fastapi>=0.162",
+  "uvicorn>=0.38",
+  "psycopg[binary]>=3.3",
+  "pyjwt[crypto]>=2.15",
+  "pyyaml>=6",
+  "httpx>=0.28",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "pytest-asyncio>=1.2", "ruff>=0.14", "mypy>=1.18", "types-PyYAML"]
+
+[project.scripts]
+desk = "desk.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+markers = [
+  "db: needs PostgreSQL (DESK_TEST_DATABASE_URL)",
+  "oidc: needs a real OpenID Connect provider (DESK_TEST_OIDC_ISSUER)",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM", "RUF"]
+ignore = ["RUF001", "RUF002", "RUF003", "E501"]
+
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = ["fastapi.Depends"]
+
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true
+check_untyped_defs = true

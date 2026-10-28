@@ -1,0 +1,48 @@
+# Where a use case may run. The data classes each target accepts are an EXAMPLE HOSTING POLICY a
+# customer confirms in discovery (customer files may narrow it); they are not legal statements.
+# Facts about each target are sourced; `status` says whether it can be ordered today.
+
+data_classes:
+  # ordered from least to most protected; `rank` is used for ceilings
+  public:        {rank: 0, title: "Public (offen)"}
+  internal:      {rank: 1, title: "Internal, no personal data"}
+  personal:      {rank: 2, title: "Personal data (Art. 6 GDPR)"}
+  special:       {rank: 3, title: "Special categories (Art. 9 GDPR)"}
+  social:        {rank: 3, title: "Social data (§ 35 SGB I)"}
+  tax:           {rank: 3, title: "Tax secrecy (§ 30 AO)"}
+  vs_nfd:        {rank: 4, title: "VS-NUR FÜR DEN DIENSTGEBRAUCH"}
+  vs_confidential_plus: {rank: 5, title: "VS-VERTRAULICH and above"}
+
+targets:
+  openai_api_eu:
+    title: OpenAI API, EU data residency project
+    facts:
+      - Requests in an EU-region project are processed in region with zero data retention.
+      - Business and API data are not used for training by default; DPA available.
+    source: "https://openai.com/index/introducing-data-residency-in-europe/"
+    status: available
+    accepts: [public, internal, personal]
+    suits: [api_application, agent_workflow, citizen_channel]
+  chatgpt_enterprise_eu:
+    title: ChatGPT Enterprise workspace with EU data residency
+    facts:
+      - Conversations, prompts, files and custom GPTs stored at rest in Europe.
+      - In-region GPU inference in Europe for eligible Enterprise customers since 16 January 2026.
+      - SSO, SCIM, admin controls and audit for the workspace.
+    source: "https://openai.com/index/introducing-data-residency-in-europe/"
+    status: available
+    accepts: [public, internal, personal]
+    suits: [staff_assistant, codex]
+  openai_for_germany:
+    title: OpenAI for Germany on SAP Delos Cloud
+    facts:
+      - Announced by SAP and OpenAI on 24 September 2025 for the German public sector, planned for 2026.
+      - Operated by SAP's Delos Cloud on Microsoft Azure technology in Germany; 4,000 GPUs planned.
+      - Built to meet German sovereignty, security and legal requirements.
+    source: "https://openai.com/global-affairs/openai-for-germany/"
+    status: planned        # set to `available` once the customer can order it
+    accepts: [public, internal, personal, special, social, tax]
+    suits: [staff_assistant, api_application, agent_workflow, citizen_channel]
+
+# What blocks every target: the desk will never route these anywhere.
+never_routed: [vs_nfd, vs_confidential_plus]

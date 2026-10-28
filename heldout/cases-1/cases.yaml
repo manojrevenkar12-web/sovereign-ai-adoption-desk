@@ -1,0 +1,904 @@
+# Blind held-out set cases-1. Written from docs/RULES.md and docs/DISCOVERY.md only.
+# Every expectation was worked out by hand.
+cases:
+  # ---------------------------------------------------------------- prohibited
+  - id: c01
+    note: A Bavarian town scores residents on their past conduct towards the town to rank them for municipal housing.
+    customer: {level: kommune, land: by, buyer: other}
+    use_case:
+      pattern: case_prioritisation
+      users: staff
+      data: [personal]
+      decision_role: decides
+      purpose_area: public_benefits
+      profiling: true
+      prohibited: [social_scoring]
+      automated_decision: true
+      contract_value_eur: 80000
+    expect:
+      ai_act_class: prohibited
+      stops: [prohibited]
+
+  - id: c02
+    note: Bavarian state police want to predict which residents will commit burglaries from their personality profiles alone.
+    customer: {level: land, land: by, buyer: other}
+    use_case:
+      pattern: case_prioritisation
+      users: staff
+      data: [personal]
+      decision_role: materially_influences
+      purpose_area: law_enforcement
+      profiling: true
+      prohibited: [predictive_policing_profiling_only]
+      contract_value_eur: 300000
+    expect:
+      ai_act_class: prohibited
+      stops: [prohibited]
+
+  - id: c03
+    note: A federal authority's citizen hotline wants to infer the emotions of its call-centre staff from their voices.
+    customer: {level: bund, land: bund, buyer: central_government}
+    use_case:
+      pattern: knowledge_assistant
+      users: staff
+      data: [personal, special]
+      decision_role: pattern_detection
+      purpose_area: employment
+      profiling: true
+      prohibited: [emotion_recognition_workplace]
+      systematic_monitoring: true
+      contract_value_eur: 120000
+    expect:
+      ai_act_class: prohibited
+      stops: [prohibited]
+
+  - id: c04
+    note: A state criminal police office wants to build a face database by scraping photos from social networks without targeting anyone.
+    customer: {level: land, land: by, buyer: other}
+    use_case:
+      pattern: form_extraction
+      users: staff
+      data: [personal, special]
+      decision_role: preparatory
+      purpose_area: law_enforcement
+      profiling: false
+      prohibited: [untargeted_facial_scraping]
+      large_scale: true
+      contract_value_eur: 400000
+    expect:
+      ai_act_class: prohibited
+      stops: [prohibited]
+
+  - id: c05
+    note: A city wants to sort people on its CCTV images by presumed religion to plan police presence at festivals.
+    customer: {level: kommune, land: by, buyer: other}
+    use_case:
+      pattern: case_prioritisation
+      users: staff
+      data: [personal, special]
+      decision_role: materially_influences
+      purpose_area: biometrics
+      profiling: true
+      prohibited: [biometric_categorisation_sensitive]
+      systematic_monitoring: true
+      contract_value_eur: 150000
+    expect:
+      ai_act_class: prohibited
+      stops: [prohibited]
+
+  # ---------------------------------------------------------------- high-risk
+  - id: c06
+    note: A Bavarian district social welfare office assesses claims for basic income support and proposes the decision caseworkers usually follow.
+    customer: {level: kommune, land: by, buyer: other, contracts: [], framework_agreement: false}
+    use_case:
+      pattern: eligibility_assessment
+      users: staff
+      data: [personal, social]
+      decision_role: materially_influences
+      purpose_area: public_benefits
+      profiling: false
+      vulnerable_subjects: true
+      contract_value_eur: 180000
+    expect:
+      ai_act_class: high_risk
+      derogation: null
+      transparency: []
+      dpia: true
+      fria: true
+      staff_council: true
+      procurement_route: national
+      hosting: openai_for_germany
+      stops: []
+
+  - id: c07
+    note: A Bavarian state family benefits office ranks applications by a risk profile of the applicant to prepare caseworkers' checks.
+    customer: {level: land, land: by, buyer: other, contracts: [], framework_agreement: true}
+    use_case:
+      pattern: case_prioritisation
+      users: staff
+      data: [personal]
+      decision_role: preparatory
+      purpose_area: public_benefits
+      profiling: true
+      contract_value_eur: 250000
+    expect:
+      ai_act_class: high_risk
+      derogation: null
+      transparency: []
+      dpia: true
+      fria: true
+      staff_council: true
+      procurement_route: framework_call_off
+      hosting: openai_api_eu
+      stops: []
+
+  - id: c08
+    note: The federal migration office prioritises asylum applications by assessed protection need, including health information, and the order steers the decision.
+    customer: {level: bund, land: bund, buyer: central_government, contracts: [openai_api_eu], framework_agreement: false}
+    use_case:
+      pattern: case_prioritisation
+      users: staff
+      data: [personal, special]
+      decision_role: materially_influences
+      purpose_area: migration
+      profiling: false
+      vulnerable_subjects: true
+      contract_value_eur: 145000
+    expect:
+      ai_act_class: high_risk
+      derogation: null
+      transparency: []
+      dpia: true
+      fria: true
+      staff_council: true
+      procurement_route: eu_procedure
+      hosting: openai_for_germany
+      stops: []
+
+  - id: c09
+    note: A federal ministry screens job applicants against the requirements profile and builds a ranked shortlist the panel adopts.
+    customer:
+      level: bund
+      land: bund
+      buyer: central_government
+      contracts: [openai_api_eu]
+      framework_agreement: false
+      hosting_policy: {personal: [openai_api_eu, openai_for_germany]}
+    use_case:
+      pattern: eligibility_assessment
+      users: staff
+      data: [personal]
+      decision_role: materially_influences
+      purpose_area: employment
+      profiling: true
+      contract_value_eur: 200000
+    expect:
+      ai_act_class: high_risk
+      derogation: null
+      transparency: []
+      dpia: true
+      fria: true
+      staff_council: true
+      procurement_route: null
+      hosting: openai_api_eu
+      stops: []
+
+  - id: c10
+    note: A Bavarian municipal utility lets the system decide the load-shedding sequence of its power grid from network data alone.
+    customer: {level: kommune, land: by, buyer: other, contracts: [], framework_agreement: false}
+    use_case:
+      pattern: case_prioritisation
+      users: staff
+      data: [internal]
+      decision_role: decides
+      purpose_area: critical_infrastructure
+      profiling: false
+      automated_decision: true
+      contract_value_eur: 250000
+    expect:
+      ai_act_class: high_risk
+      derogation: null
+      transparency: []
+      dpia: false
+      fria: false
+      staff_council: true
+      procurement_route: eu_procedure
+      hosting: openai_api_eu
+      stops: []
+
+  - id: c11
+    note: The Bavarian school administration marks pupils' written final exams and proposes grades that teachers usually adopt.
+    customer: {level: land, land: by, buyer: other, contracts: [chatgpt_enterprise_eu], framework_agreement: false}
+    use_case:
+      pattern: form_extraction
+      users: staff
+      data: [personal]
+      decision_role: materially_influences
+      purpose_area: education
+      profiling: false
+      vulnerable_subjects: true
+      contract_value_eur: 216000
+    expect:
+      ai_act_class: high_risk
+      derogation: null
+      transparency: []
+      dpia: true
+      fria: true
+      staff_council: true
+      procurement_route: eu_procedure
+      hosting: openai_api_eu
+      stops: []
+
+  - id: c12
+    note: A Bavarian integrated emergency control centre triages 112 calls by urgency from callers' symptom descriptions; the customer prefers the API project.
+    customer: {level: kommune, land: by, buyer: other, contracts: [], framework_agreement: true}
+    use_case:
+      pattern: case_prioritisation
+      users: staff
+      data: [personal, special]
+      decision_role: materially_influences
+      purpose_area: emergency_triage
+      profiling: false
+      large_scale: true
+      contract_value_eur: 500000
+      target_preference: openai_api_eu
+    expect:
+      ai_act_class: high_risk
+      derogation: null
+      transparency: []
+      dpia: true
+      fria: true
+      staff_council: true
+      procurement_route: framework_call_off
+      hosting: openai_for_germany
+      stops: []
+
+  - id: c13
+    note: A Bavarian city lets residents and housing-benefit staff run an online check that decides housing-benefit applications without a person where the law allows it.
+    customer: {level: kommune, land: by, buyer: other, contracts: [], framework_agreement: false}
+    use_case:
+      pattern: eligibility_assessment
+      users: both
+      data: [personal, social]
+      decision_role: decides
+      purpose_area: public_benefits
+      profiling: false
+      automated_decision: true
+      vulnerable_subjects: true
+      contract_value_eur: 90000
+    expect:
+      ai_act_class: high_risk
+      derogation: null
+      transparency: [interacts_with_public]
+      dpia: true
+      fria: true
+      staff_council: true
+      procurement_route: national
+      hosting: openai_for_germany
+      stops: []
+
+  - id: c14
+    note: Bavarian administrative courts draft judgments from case files that include medical reports; the court prefers the API project it already has.
+    customer: {level: land, land: by, buyer: other, contracts: [openai_api_eu], framework_agreement: false}
+    use_case:
+      pattern: drafting_with_sources
+      users: staff
+      data: [personal, special]
+      decision_role: materially_influences
+      purpose_area: justice
+      profiling: false
+      contract_value_eur: 300000
+      target_preference: openai_api_eu
+    expect:
+      ai_act_class: high_risk
+      derogation: null
+      transparency: []
+      dpia: true
+      fria: true
+      staff_council: true
+      procurement_route: eu_procedure
+      hosting: openai_for_germany
+      stops: []
+
+  - id: c15
+    note: The federal police flag travel records that deviate from earlier patterns using risk profiles of travellers, for officers to check.
+    customer: {level: bund, land: bund, buyer: central_government, contracts: [], framework_agreement: false}
+    use_case:
+      pattern: case_prioritisation
+      users: staff
+      data: [personal]
+      decision_role: pattern_detection
+      purpose_area: law_enforcement
+      profiling: true
+      large_scale: true
+      systematic_monitoring: true
+      contract_value_eur: 139999
+    expect:
+      ai_act_class: high_risk
+      derogation: null
+      transparency: []
+      dpia: true
+      fria: true
+      staff_council: true
+      procurement_route: national
+      hosting: openai_api_eu
+      stops: []
+
+  # ---------------------------------------------------------------- not high-risk under Art. 6(3)
+  - id: c16
+    note: The federal migration office extracts fields from asylum application forms, including health details, into the case file.
+    customer: {level: bund, land: bund, buyer: central_government, contracts: [openai_api_eu], framework_agreement: false}
+    use_case:
+      pattern: form_extraction
+      users: staff
+      data: [personal, special]
+      decision_role: procedural
+      purpose_area: migration
+      profiling: false
+      contract_value_eur: 120000
+    expect:
+      ai_act_class: not_high_risk
+      derogation: procedural
+      transparency: []
+      dpia: true
+      fria: false
+      staff_council: true
+      procurement_route: national
+      hosting: openai_for_germany
+      stops: []
+
+  - id: c17
+    note: Bavarian teachers have the assistant improve the language of report-card comments they have already written about pupils.
+    customer: {level: land, land: by, buyer: other, contracts: [chatgpt_enterprise_eu], framework_agreement: false}
+    use_case:
+      pattern: translation_plain_language
+      users: staff
+      data: [personal]
+      decision_role: improves_completed_human_work
+      purpose_area: education
+      profiling: false
+      vulnerable_subjects: true
+      contract_value_eur: 60000
+    expect:
+      ai_act_class: not_high_risk
+      derogation: improves_completed_human_work
+      transparency: []
+      dpia: true
+      fria: false
+      staff_council: true
+      procurement_route: null
+      hosting: chatgpt_enterprise_eu
+      stops: []
+
+  - id: c18
+    note: A Bavarian district office checks completed benefit decisions for deviations from its earlier decision patterns, without per-person logging of staff use.
+    customer: {level: kommune, land: by, buyer: other, contracts: [], framework_agreement: true}
+    use_case:
+      pattern: case_prioritisation
+      users: staff
+      data: [personal, social]
+      decision_role: pattern_detection
+      purpose_area: public_benefits
+      profiling: false
+      per_user_logging: false
+      contract_value_eur: 70000
+    expect:
+      ai_act_class: not_high_risk
+      derogation: pattern_detection
+      transparency: []
+      dpia: true
+      fria: false
+      staff_council: false
+      procurement_route: framework_call_off
+      hosting: openai_for_germany
+      stops: []
+
+  - id: c19
+    note: A federal ministry summarises each application file into a structured overview that the selection panel then assesses itself.
+    customer: {level: bund, land: bund, buyer: central_government, contracts: [], framework_agreement: false}
+    use_case:
+      pattern: records_summary
+      users: staff
+      data: [personal]
+      decision_role: preparatory
+      purpose_area: employment
+      profiling: false
+      contract_value_eur: 140000
+    expect:
+      ai_act_class: not_high_risk
+      derogation: preparatory
+      transparency: []
+      dpia: false
+      fria: false
+      staff_council: true
+      procurement_route: eu_procedure
+      hosting: chatgpt_enterprise_eu
+      stops: []
+
+  - id: c20
+    note: A Bavarian regional court routes incoming filings to the responsible chamber from the cover sheet.
+    customer: {level: land, land: by, buyer: other, contracts: [], framework_agreement: false}
+    use_case:
+      pattern: form_extraction
+      users: staff
+      data: [personal]
+      decision_role: procedural
+      purpose_area: justice
+      profiling: false
+      contract_value_eur: 216001
+    expect:
+      ai_act_class: not_high_risk
+      derogation: procedural
+      transparency: []
+      dpia: false
+      fria: false
+      staff_council: true
+      procurement_route: eu_procedure
+      hosting: openai_api_eu
+      stops: []
+
+  - id: c21
+    note: The federal migration office translates asylum seekers' documents, including medical certificates, for the case officer before the interview; it prefers its ChatGPT workspace.
+    customer: {level: bund, land: bund, buyer: central_government, contracts: [chatgpt_enterprise_eu], framework_agreement: false}
+    use_case:
+      pattern: translation_plain_language
+      users: staff
+      data: [personal, special]
+      decision_role: preparatory
+      purpose_area: migration
+      profiling: false
+      vulnerable_subjects: true
+      contract_value_eur: 100000
+      target_preference: chatgpt_enterprise_eu
+    expect:
+      ai_act_class: not_high_risk
+      derogation: preparatory
+      transparency: []
+      dpia: true
+      fria: false
+      staff_council: true
+      procurement_route: national
+      hosting: openai_for_germany
+      stops: []
+
+  - id: c22
+    note: A Bavarian municipal water utility detects anomalies in pump sensor data for engineers, with no per-person logging of use.
+    customer: {level: kommune, land: by, buyer: other, contracts: [openai_api_eu], framework_agreement: false}
+    use_case:
+      pattern: case_prioritisation
+      users: staff
+      data: [internal]
+      decision_role: pattern_detection
+      purpose_area: critical_infrastructure
+      profiling: false
+      per_user_logging: false
+      large_scale: true
+      contract_value_eur: 300000
+    expect:
+      ai_act_class: not_high_risk
+      derogation: pattern_detection
+      transparency: []
+      dpia: false
+      fria: false
+      staff_council: false
+      procurement_route: null
+      hosting: openai_api_eu
+      stops: []
+
+  # ---------------------------------------------------------------- transparency
+  - id: c23
+    note: A Bavarian district's chatbot answers general questions on how to apply for basic income support, using the enquirer's name and email.
+    customer: {level: kommune, land: by, buyer: other, contracts: [], framework_agreement: false}
+    use_case:
+      pattern: enquiry_answering
+      users: public
+      data: [public, personal]
+      decision_role: information
+      purpose_area: public_benefits
+      profiling: false
+      contract_value_eur: 90000
+    expect:
+      ai_act_class: transparency
+      derogation: null
+      transparency: [interacts_with_public]
+      dpia: false
+      fria: false
+      staff_council: false
+      procurement_route: national
+      hosting: openai_api_eu
+      stops: []
+
+  - id: c24
+    note: The federal migration office's chatbot explains the asylum procedure to asylum seekers in their language.
+    customer: {level: bund, land: bund, buyer: central_government, contracts: [openai_api_eu], framework_agreement: false}
+    use_case:
+      pattern: enquiry_answering
+      users: public
+      data: [public, personal]
+      decision_role: information
+      purpose_area: migration
+      profiling: false
+      vulnerable_subjects: true
+      contract_value_eur: 200000
+    expect:
+      ai_act_class: transparency
+      derogation: null
+      transparency: [interacts_with_public]
+      dpia: true
+      fria: false
+      staff_council: false
+      procurement_route: null
+      hosting: openai_api_eu
+      stops: []
+
+  - id: c25
+    note: A Bavarian state ministry publishes daily air-quality bulletins for the whole state written by the system without editorial review.
+    customer: {level: land, land: by, buyer: other, contracts: [], framework_agreement: true}
+    use_case:
+      pattern: drafting_with_sources
+      users: staff
+      data: [public, internal]
+      decision_role: information
+      purpose_area: none
+      profiling: false
+      publishes_public_interest_text: true
+      editorial_review: false
+      large_scale: true
+      contract_value_eur: 260000
+    expect:
+      ai_act_class: transparency
+      derogation: null
+      transparency: [publishes_public_interest_text]
+      dpia: false
+      fria: false
+      staff_council: true
+      procurement_route: framework_call_off
+      hosting: openai_api_eu
+      stops: []
+
+  - id: c26
+    note: A Bavarian tax office's chatbot answers taxpayers' questions about the status of their own tax return.
+    customer: {level: land, land: by, buyer: other, contracts: [], framework_agreement: false}
+    use_case:
+      pattern: enquiry_answering
+      users: public
+      data: [personal, tax]
+      decision_role: information
+      purpose_area: none
+      profiling: false
+      contract_value_eur: 250000
+    expect:
+      ai_act_class: transparency
+      derogation: null
+      transparency: [interacts_with_public]
+      dpia: true
+      fria: false
+      staff_council: false
+      procurement_route: eu_procedure
+      hosting: openai_for_germany
+      stops: []
+
+  - id: c27
+    note: A Bavarian town's chatbot answers questions on waste collection and also publishes the generated FAQ answers on the town website without review.
+    customer: {level: kommune, land: by, buyer: other, contracts: [openai_api_eu], framework_agreement: false}
+    use_case:
+      pattern: enquiry_answering
+      users: public
+      data: [public]
+      decision_role: information
+      purpose_area: none
+      profiling: false
+      publishes_public_interest_text: true
+      editorial_review: false
+      contract_value_eur: 40000
+    expect:
+      ai_act_class: transparency
+      derogation: null
+      transparency: [interacts_with_public, publishes_public_interest_text]
+      dpia: false
+      fria: false
+      staff_council: false
+      procurement_route: null
+      hosting: openai_api_eu
+      stops: []
+
+  - id: c28
+    note: A federal ministry's citizen chatbot handles enquiries with personal data, and its hosting policy allows personal data only on OpenAI for Germany.
+    customer:
+      level: bund
+      land: bund
+      buyer: central_government
+      contracts: [openai_api_eu]
+      framework_agreement: false
+      hosting_policy: {personal: [openai_for_germany]}
+    use_case:
+      pattern: enquiry_answering
+      users: public
+      data: [public, personal]
+      decision_role: information
+      purpose_area: none
+      profiling: false
+      contract_value_eur: 160000
+    expect:
+      ai_act_class: transparency
+      derogation: null
+      transparency: [interacts_with_public]
+      dpia: false
+      fria: false
+      staff_council: false
+      procurement_route: eu_procedure
+      hosting: openai_for_germany
+      stops: []
+
+  - id: c29
+    note: A large Bavarian city's service chatbot is used by residents and by citizen-office staff, and the city prefers OpenAI for Germany.
+    customer: {level: kommune, land: by, buyer: other, contracts: [openai_api_eu], framework_agreement: false}
+    use_case:
+      pattern: enquiry_answering
+      users: both
+      data: [public, personal]
+      decision_role: information
+      purpose_area: none
+      profiling: false
+      large_scale: true
+      contract_value_eur: 215999
+      target_preference: openai_for_germany
+    expect:
+      ai_act_class: transparency
+      derogation: null
+      transparency: [interacts_with_public]
+      dpia: true
+      fria: false
+      staff_council: true
+      procurement_route: national
+      hosting: openai_for_germany
+      stops: []
+
+  - id: c30
+    note: A Bavarian city's culture portal chatbot recommends events to residents from a profile of their interests and past bookings.
+    customer: {level: kommune, land: by, buyer: other, contracts: [], framework_agreement: true}
+    use_case:
+      pattern: enquiry_answering
+      users: public
+      data: [public, personal]
+      decision_role: information
+      purpose_area: none
+      profiling: true
+      contract_value_eur: 50000
+    expect:
+      ai_act_class: transparency
+      derogation: null
+      transparency: [interacts_with_public]
+      dpia: true
+      fria: false
+      staff_council: false
+      procurement_route: framework_call_off
+      hosting: openai_api_eu
+      stops: []
+
+  - id: c31
+    note: Bavarian state press staff turn official notices into plain language that is published directly without editorial review, with no per-person logging.
+    customer: {level: land, land: by, buyer: other, contracts: [chatgpt_enterprise_eu], framework_agreement: false}
+    use_case:
+      pattern: translation_plain_language
+      users: staff
+      data: [public]
+      decision_role: information
+      purpose_area: none
+      profiling: false
+      per_user_logging: false
+      publishes_public_interest_text: true
+      editorial_review: false
+      contract_value_eur: 30000
+    expect:
+      ai_act_class: transparency
+      derogation: null
+      transparency: [publishes_public_interest_text]
+      dpia: false
+      fria: false
+      staff_council: false
+      procurement_route: null
+      hosting: chatgpt_enterprise_eu
+      stops: []
+
+  - id: c32
+    note: A federal pension insurer's chatbot answers insured people about their own pension account, but its hosting policy allows social data only on the API project.
+    customer:
+      level: bund
+      land: bund
+      buyer: other
+      contracts: []
+      framework_agreement: false
+      hosting_policy: {social: [openai_api_eu]}
+    use_case:
+      pattern: enquiry_answering
+      users: public
+      data: [personal, social]
+      decision_role: information
+      purpose_area: none
+      profiling: false
+      large_scale: true
+      contract_value_eur: 400000
+    expect:
+      ai_act_class: transparency
+      derogation: null
+      transparency: [interacts_with_public]
+      dpia: true
+      fria: false
+      staff_council: false
+      hosting: null
+      stops: [no_target]
+
+  # ---------------------------------------------------------------- classified
+  - id: c33
+    note: A federal ministry wants a knowledge assistant over its VS-NUR FUER DEN DIENSTGEBRAUCH policy papers.
+    customer: {level: bund, land: bund, buyer: central_government, contracts: [chatgpt_enterprise_eu], framework_agreement: false}
+    use_case:
+      pattern: knowledge_assistant
+      users: staff
+      data: [internal, vs_nfd]
+      decision_role: information
+      purpose_area: none
+      profiling: false
+      contract_value_eur: 100000
+    expect:
+      ai_act_class: minimal
+      stops: [classified]
+
+  - id: c34
+    note: The Bavarian state criminal police office wants to prioritise investigations from case files classified VS-VERTRAULICH, and the order steers which cases are pursued.
+    customer: {level: land, land: by, buyer: other, contracts: [], framework_agreement: false}
+    use_case:
+      pattern: case_prioritisation
+      users: staff
+      data: [personal, vs_confidential_plus]
+      decision_role: materially_influences
+      purpose_area: law_enforcement
+      profiling: false
+      contract_value_eur: 350000
+    expect:
+      ai_act_class: high_risk
+      stops: [classified]
+
+  # ---------------------------------------------------------------- minimal
+  - id: c35
+    note: A federal IT service centre modernises legacy COBOL code with Codex under its existing ChatGPT Enterprise contract.
+    customer: {level: bund, land: bund, buyer: central_government, contracts: [chatgpt_enterprise_eu], framework_agreement: true}
+    use_case:
+      pattern: code_modernisation
+      users: staff
+      data: [internal]
+      decision_role: information
+      purpose_area: none
+      profiling: false
+      contract_value_eur: 180000
+    expect:
+      ai_act_class: minimal
+      derogation: null
+      transparency: []
+      dpia: false
+      fria: false
+      staff_council: true
+      procurement_route: null
+      hosting: chatgpt_enterprise_eu
+      stops: []
+
+  - id: c36
+    note: The Bavarian state IT service modernises a registry application with Codex on samples containing personal data, but its policy allows personal data only on the API project.
+    customer:
+      level: land
+      land: by
+      buyer: other
+      contracts: [chatgpt_enterprise_eu]
+      framework_agreement: false
+      hosting_policy: {personal: [openai_api_eu]}
+    use_case:
+      pattern: code_modernisation
+      users: staff
+      data: [internal, personal]
+      decision_role: information
+      purpose_area: none
+      profiling: false
+      contract_value_eur: 80000
+    expect:
+      ai_act_class: minimal
+      derogation: null
+      transparency: []
+      dpia: false
+      fria: false
+      staff_council: true
+      hosting: null
+      stops: [no_target]
+
+  - id: c37
+    note: The Bavarian tax IT office wants Codex to modernise its assessment software using real tax records as test data.
+    customer: {level: land, land: by, buyer: other, contracts: [], framework_agreement: false}
+    use_case:
+      pattern: code_modernisation
+      users: staff
+      data: [internal, tax]
+      decision_role: information
+      purpose_area: none
+      profiling: false
+      contract_value_eur: 120000
+    expect:
+      ai_act_class: minimal
+      derogation: null
+      transparency: []
+      dpia: true
+      fria: false
+      staff_council: true
+      hosting: null
+      stops: [no_target]
+
+  - id: c38
+    note: A Bavarian municipal youth welfare office summarises child-protection case files, combining school and health records, for caseworkers.
+    customer: {level: kommune, land: by, buyer: other, contracts: [chatgpt_enterprise_eu], framework_agreement: false}
+    use_case:
+      pattern: records_summary
+      users: staff
+      data: [personal, social, special]
+      decision_role: preparatory
+      purpose_area: none
+      profiling: false
+      vulnerable_subjects: true
+      matching_datasets: true
+      contract_value_eur: 50000
+    expect:
+      ai_act_class: minimal
+      derogation: null
+      transparency: []
+      dpia: true
+      fria: false
+      staff_council: true
+      procurement_route: national
+      hosting: openai_for_germany
+      stops: []
+
+  - id: c39
+    note: A Bavarian town's press office drafts press releases from council minutes, and the press officer reviews and signs off each one before publication.
+    customer: {level: kommune, land: by, buyer: other, contracts: [], framework_agreement: false}
+    use_case:
+      pattern: drafting_with_sources
+      users: staff
+      data: [public, internal]
+      decision_role: information
+      purpose_area: none
+      profiling: false
+      publishes_public_interest_text: true
+      editorial_review: true
+      contract_value_eur: 30000
+    expect:
+      ai_act_class: minimal
+      derogation: null
+      transparency: []
+      dpia: false
+      fria: false
+      staff_council: true
+      procurement_route: national
+      hosting: openai_api_eu
+      stops: []
+
+  - id: c40
+    note: A federal real-estate agency (not a supreme or higher federal authority) wants a staff knowledge assistant over its lease files, without per-person logging, and would prefer the API project.
+    customer: {level: bund, land: bund, buyer: other, contracts: [], framework_agreement: false}
+    use_case:
+      pattern: knowledge_assistant
+      users: staff
+      data: [internal, personal]
+      decision_role: information
+      purpose_area: none
+      profiling: false
+      per_user_logging: false
+      contract_value_eur: 150000
+      target_preference: openai_api_eu
+    expect:
+      ai_act_class: minimal
+      derogation: null
+      transparency: []
+      dpia: false
+      fria: false
+      staff_council: false
+      procurement_route: national
+      hosting: chatgpt_enterprise_eu
+      stops: []

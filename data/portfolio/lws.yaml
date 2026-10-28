@@ -1,0 +1,100 @@
+# Fictional customer. Any resemblance to a real authority is not intended.
+id: lws
+name: Landesamt für Wohnen und Soziales (fictional)
+level: land
+land: by
+buyer: other
+mission_priorities:
+  - Housing benefit (Wohngeld) decisions within the statutory processing time
+  - Fewer phone calls about the status of applications
+  - Plain-language letters citizens understand
+reviewers: {legal: 1, dsb: 1, isb: 1, procurement: 1, accessibility: 1, customer_pm: 2, provider_team: 1}
+staff_council: {weekday: 2, skip_months: [8], decision_weeks: 2, framework_agreement: false}
+blackouts:
+  - [2026-12-21, 2027-01-06]
+contracts: [openai_api_eu]
+framework_agreement: false
+seats: 150
+champions:
+  Wohngeld: Sachgebietsleitung Wohngeld
+  Bürgerservice: Referentin Bürgerservice
+stakeholders: [Amtsleitung, IT-Leitung, Datenschutzbeauftragte, Personalrat, Informationssicherheitsbeauftragter]
+use_cases:
+  - id: lws-wohngeld-auskunft
+    title: Wohngeld enquiry assistant on the portal
+    pattern: enquiry_answering
+    mission: Answer general questions about Wohngeld from the office's own guidance, day and night, and hand anything about a person's own application to the team.
+    mission_weight: critical
+    stage: proof_of_value
+    owner: Referatsleitung Bürgerservice
+    users: public
+    data: [public, personal]
+    decision_role: information
+    purpose_area: public_benefits
+    cases_per_year: 180000
+    minutes_per_case: 6
+    large_scale: true
+    contract_value_eur: 90000
+    pov: wohngeld
+    done: [pov]
+    decision_criteria:
+      - At least 70 % of general questions answered with a supported citation on the blind set
+      - Zero statements about an individual's eligibility
+      - No personal identifier reaches the model
+    success_measures:
+      - Calls to the hotline about general questions down 25 % in the pilot district
+    blockers:
+      - {text: Accessibility test slot not booked with the external lab, since: 2026-10-05, owner: customer_pm}
+  - id: lws-wohngeld-vorpruefung
+    title: Eligibility pre-assessment of Wohngeld applications
+    pattern: eligibility_assessment
+    mission: Score incoming applications for likely eligibility and missing evidence so caseworkers start with the right cases.
+    mission_weight: high
+    stage: qualified
+    owner: Sachgebietsleitung Wohngeld
+    users: staff
+    staff_users: 140
+    data: [personal, social]
+    decision_role: materially_influences
+    purpose_area: public_benefits
+    cases_per_year: 95000
+    minutes_per_case: 20
+    large_scale: true
+    vulnerable_subjects: true
+    contract_value_eur: 260000
+    decision_criteria:
+      - Caseworkers overturn the pre-assessment in under 10 % of reviewed cases
+      - No difference in error rate between applicant groups beyond 2 percentage points
+  - id: lws-vollstaendigkeit
+    title: Completeness check of incoming applications
+    pattern: form_extraction
+    mission: Check that an application has every required document before a caseworker opens it, and list what is missing.
+    mission_weight: high
+    stage: evaluating
+    owner: Sachgebietsleitung Wohngeld
+    users: staff
+    staff_users: 140
+    data: [personal, social]
+    decision_role: procedural
+    purpose_area: public_benefits
+    cases_per_year: 95000
+    minutes_per_case: 8
+    large_scale: true
+    vulnerable_subjects: true
+    contract_value_eur: 120000
+    decision_criteria:
+      - Missing documents found with recall of at least 95 % on the blind set
+  - id: lws-bescheid-erlaeuterung
+    title: Plain-language explanation of decisions
+    pattern: translation_plain_language
+    mission: Add a plain-language page to each decision letter explaining what it means and what to do next.
+    mission_weight: normal
+    stage: discovery
+    owner: Referatsleitung Bürgerservice
+    users: staff
+    staff_users: 40
+    data: [personal, social]
+    decision_role: information
+    cases_per_year: 60000
+    minutes_per_case: 4
+    contract_value_eur: 60000

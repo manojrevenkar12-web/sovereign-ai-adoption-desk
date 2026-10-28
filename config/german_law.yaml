@@ -1,0 +1,93 @@
+# GDPR and the German public-law rules that decide whether a use case can reach production.
+# Sources are cited per entry; anything marked `assumption: true` is a planning default to be
+# confirmed in discovery with the customer, not a legal statement.
+
+legal_basis:
+  article: "Art. 6(1)(e), 6(3) GDPR"
+  text: >-
+    Public bodies process personal data for a task in the public interest or in the exercise of
+    official authority, on a basis in Union or Member State law (e.g. § 3 BDSG for federal bodies,
+    Art. 4 BayDSG in Bavaria). Consent is rarely a valid basis for public authorities (Recital 43).
+  by_level:
+    bund: "§ 3 BDSG"
+    by: "Art. 4 BayDSG"
+
+# Art. 35 GDPR. The EDPB-endorsed WP 248 rev.01 guidance: a processing meeting two or more of these
+# criteria will in most cases need a DPIA. The German authorities treat the use of AI with personal
+# data as an innovative technology (criterion 8).
+dpia:
+  article: "Art. 35 GDPR; WP 248 rev.01"
+  threshold: 2
+  criteria:
+    evaluation_or_scoring: {n: 1, text: Evaluation or scoring, including profiling and predicting.}
+    automated_decision_legal_effect: {n: 2, text: Automated decision-making with legal or similarly significant effect.}
+    systematic_monitoring: {n: 3, text: Systematic monitoring of data subjects.}
+    sensitive_data: {n: 4, text: "Special categories (Art. 9), criminal data (Art. 10), or data under social, tax or professional secrecy."}
+    large_scale: {n: 5, text: Data processed on a large scale.}
+    matching_datasets: {n: 6, text: Matching or combining datasets.}
+    vulnerable_subjects: {n: 7, text: Data concerning vulnerable data subjects (e.g. benefit claimants, children, asylum seekers).}
+    innovative_technology: {n: 8, text: Innovative use or new technological solutions (AI with personal data).}
+    prevents_rights: {n: 9, text: Processing that prevents data subjects from exercising a right or using a service.}
+  mandatory_art_35_3:
+    - {key: automated_decision_legal_effect_with_profiling, article: "Art. 35(3)(a)", text: Systematic and extensive evaluation based on automated processing, including profiling, producing legal effects.}
+    - {key: large_scale_sensitive, article: "Art. 35(3)(b)", text: Large-scale processing of special categories or criminal data.}
+
+automated_decision:
+  article: "Art. 22 GDPR; § 35a VwVfG"
+  text: >-
+    A fully automated administrative act is permitted only where a legal provision allows it and the
+    authority has neither discretion nor a margin of appreciation (§ 35a VwVfG; Art. 35a BayVwVfG in
+    Bavaria). A use case where the system decides without a person is blocked until that basis is shown.
+
+secrecy:
+  social_data:
+    article: "§ 35 SGB I; § 80 SGB X"
+    text: >-
+      Social data are protected by the social secrecy. Processing by a contractor on the authority's
+      behalf must be notified to the supervisory authority in good time before the contract is awarded.
+  tax_secrecy:
+    article: "§ 30 AO"
+    text: Data under tax secrecy may be disclosed only where § 30(4) AO allows; a legal review is needed before any external processing.
+  classified:
+    article: "VSA (Verschlusssachenanweisung des Bundes)"
+    text: >-
+      Classified information (VS-NUR FÜR DEN DIENSTGEBRAUCH and above) may only be processed on IT
+      approved for that level. None of the hosting targets in config/targets.yaml is approved for it.
+
+# Co-determination of the staff council when an AI tool is objectively suitable to monitor staff
+# behaviour or performance (per-user logs are enough: BVerwG, 04.05.2023, 5 P 16.21).
+staff_council:
+  bund:
+    statute: "§ 80 Abs. 1 Nr. 21 BPersVG"
+  by:
+    statute: "Art. 75a Abs. 1 Nr. 1 BayPVG"
+  default:
+    statute: "state staff representation act (Landespersonalvertretungsgesetz) — confirm the provision"
+  ai_act_link:
+    article: "Art. 26(7) AI Act"
+    text: For high-risk systems the workers' representatives must also be informed before use.
+
+accessibility:
+  bund: "BITV 2.0 (EN 301 549)"
+  by: "BayBITV (EN 301 549)"
+  default: "state accessibility regulation implementing Directive (EU) 2016/2102 (EN 301 549)"
+
+# EU thresholds from 1 January 2026 (net, Delegated Regulations of the Commission, published Oct 2025).
+procurement:
+  source: "§ 106 GWB; EU thresholds 2026–2027"
+  thresholds_eur:
+    central_government: 140000     # oberste und obere Bundesbehörden
+    other: 216000                  # all other public contracting authorities
+  routes:
+    framework_call_off:
+      title: Call-off from an existing framework agreement
+      weeks: 4
+      assumption: true
+    national:
+      title: National procedure below the EU threshold (UVgO / state rules)
+      weeks: 10
+      assumption: true
+    eu_procedure:
+      title: EU-wide procedure (GWB/VgV), including 35-day tender period and standstill (§ 134 GWB)
+      weeks: 22
+      assumption: true

@@ -1,0 +1,188 @@
+# Blind held-out set pov-1 for the Kleine Anfrage drafting assistant.
+# Written from heldout/WRITING_POV.md and data/corpus/ministerium/ only, without seeing the code.
+# Classified (vs_nfd): MV-07 (Sicherheitsvorfälle 2026), MV-11 (Bewertung Bürger-Chatbot).
+# answered  -> an internal record answers it; sources = records that answer it (any one is enough)
+# withheld  -> only vs_nfd records answer it
+# no_record -> no record answers it
+anfragen:
+  - id: a01
+    text: |
+      Kleine Anfrage der Abgeordneten Dr. Miriam Hollstein (Fraktion BÜNDNIS 90/DIE GRÜNEN)
+      betreffend KI-Pilotprojekte in der Staatsverwaltung
+
+      Ich frage die Landesregierung:
+      1. Wie viele KI-Pilotprojekte laufen derzeit in der Staatsverwaltung, und auf wie viele Ressorts verteilen sie sich?
+      2. Wie viele dieser Pilotprojekte werden bereits mit echten Nutzerinnen und Nutzern erprobt?
+      3. Welche Haushaltsmittel stehen 2026 für die Pilotprojekte zur Verfügung, und wie viel davon war bis Ende September 2026 gebunden?
+      4. Wurden im Jahr 2026 Pilotprojekte beendet, und wenn ja, aus welchen Gründen?
+      5. Welche Haushaltsmittel sind für die KI-Pilotprojekte im Haushaltsjahr 2027 vorgesehen?
+      6. Welche Ressorts sind an den Pilotprojekten beteiligt (bitte namentlich aufführen)?
+    expect:
+      1: {status: answered, sources: [MV-01]}
+      2: {status: answered, sources: [MV-01]}
+      3: {status: answered, sources: [MV-01]}
+      4: {status: answered, sources: [MV-01]}
+      5: {status: no_record}
+      6: {status: no_record}
+
+  - id: a02
+    text: |
+      Kleine Anfrage des Abgeordneten Florian Brandt (Fraktion der FDP)
+      betreffend Einführung eines KI-Assistenten im Ministerium
+
+      Ich frage die Landesregierung:
+      1. Seit wann und für wie viele Beschäftigte steht im Ministerium ein KI-Assistent zur Verfügung?
+      2. Wie viele Beschäftigte nutzen den KI-Assistenten regelmäßig?
+      3. Welche Ausgaben sind für den KI-Assistenten im Haushaltsjahr 2026 veranschlagt, und wie verteilen sie sich auf Lizenzen und Schulung?
+      4. Auf welchem Weg wurde der KI-Assistent beschafft?
+      5. Von welchem Hersteller stammt das dem KI-Assistenten zugrunde liegende Sprachmodell?
+      6. Wie viele Arbeitsstunden wurden durch den Einsatz des KI-Assistenten bislang eingespart?
+    expect:
+      1: {status: answered, sources: [MV-02]}
+      2: {status: answered, sources: [MV-02]}
+      3: {status: answered, sources: [MV-05]}
+      4: {status: answered, sources: [MV-05]}
+      5: {status: no_record}
+      6: {status: no_record}
+
+  - id: a03
+    text: |
+      Kleine Anfrage der Abgeordneten Petra Lindqvist (Fraktion der SPD)
+      betreffend Datenschutz und Beschäftigtenrechte beim Einsatz von KI im Ministerium
+
+      Ich frage die Landesregierung:
+      1. Wo werden die Eingaben in den KI-Assistenten gespeichert, und werden sie zum Training von Modellen verwendet?
+      2. Wurde für den KI-Assistenten eine Datenschutz-Folgenabschätzung durchgeführt?
+      3. Welche Daten dürfen nach der Nutzungsrichtlinie nicht in den KI-Assistenten eingegeben werden?
+      4. Wird die Nutzung des KI-Assistenten je Person ausgewertet oder zur Leistungs- oder Verhaltenskontrolle verwendet?
+      5. Wann und zwischen wem wurde die Dienstvereinbarung KI geschlossen?
+      6. Wie viele Datenschutzbeschwerden im Zusammenhang mit dem KI-Assistenten sind seit seiner Einführung eingegangen?
+    expect:
+      1: {status: answered, sources: [MV-04]}
+      2: {status: answered, sources: [MV-04]}
+      3: {status: answered, sources: [MV-04]}
+      4: {status: answered, sources: [MV-02, MV-03]}
+      5: {status: answered, sources: [MV-03]}
+      6: {status: no_record}
+
+  - id: a04
+    text: |
+      Kleine Anfrage des Abgeordneten Henrik Vogt (Fraktion der CDU)
+      betreffend IT-Sicherheit im Geschäftsbereich des Ministeriums
+
+      Ich frage die Landesregierung:
+      1. Wie viele meldepflichtige IT-Sicherheitsvorfälle wurden im Ministerium im Jahr 2026 bislang registriert?
+      2. Welche Systeme waren von diesen Vorfällen betroffen, und über welche Angriffswege erfolgten sie?
+      3. Werden im Ministerium Fachverfahren auf Softwareständen betrieben, für die keine Sicherheitsupdates mehr erscheinen?
+      4. Bis wann soll die Modernisierung des Förderverfahrens abgeschlossen sein?
+      5. Wie hoch sind die Gesamtkosten der Modernisierung des Förderverfahrens?
+    expect:
+      1: {status: withheld}
+      2: {status: withheld}
+      3: {status: answered, sources: [MV-06]}
+      4: {status: answered, sources: [MV-06]}
+      5: {status: no_record}
+
+  - id: a05
+    text: |
+      Kleine Anfrage der Abgeordneten Aylin Demir (Fraktion DIE LINKE)
+      betreffend Pläne für einen Bürger-Chatbot zu Förderprogrammen
+
+      Ich frage die Landesregierung:
+      1. Hat die Landesregierung Angebote für einen Bürger-Chatbot zu Förderprogrammen eingeholt oder bewertet?
+      2. Welche Anbieter haben Angebote abgegeben, und zu welchen Preisen?
+      3. Welche Schwachstellen der angebotenen Lösungen wurden bei der Bewertung festgestellt?
+      4. Welche Vorgaben gelten in der Staatsverwaltung, bevor Ergebnisse generativer KI in Antworten an Bürgerinnen und Bürger oder in Bescheide übernommen werden?
+      5. Zu welchem Zeitpunkt soll ein Bürger-Chatbot für Förderprogramme in Betrieb gehen?
+    expect:
+      1: {status: withheld}
+      2: {status: withheld}
+      3: {status: withheld}
+      4: {status: answered, sources: [MV-08]}
+      5: {status: no_record}
+
+  - id: a06
+    text: |
+      Kleine Anfrage des Abgeordneten Jonas Albrecht (Fraktion BÜNDNIS 90/DIE GRÜNEN)
+      betreffend Einsatz von KI in der Softwareentwicklung des Ministeriums
+
+      Ich frage die Landesregierung:
+      1. Setzt das Ministerium KI-gestützte Werkzeuge in der Softwareentwicklung ein, und wenn ja, seit wann und für welches Verfahren?
+      2. Wie wird sichergestellt, dass KI-erzeugte Änderungen am Programmcode geprüft werden, bevor sie übernommen werden?
+      3. Auf welcher technischen Grundlage läuft das Förderverfahren derzeit, und welches Problem besteht dabei?
+      4. Welcher Anteil des Programmcodes wurde bislang mit dem KI-gestützten Werkzeug erzeugt?
+    expect:
+      1: {status: answered, sources: [MV-06]}
+      2: {status: answered, sources: [MV-06]}
+      3: {status: answered, sources: [MV-06]}
+      4: {status: no_record}
+
+  - id: a07
+    text: |
+      Kleine Anfrage der Abgeordneten Katharina Seidel (Fraktion der SPD)
+      betreffend Fachkräfte für Digitalisierung und Künstliche Intelligenz im Ministerium
+
+      Ich frage die Landesregierung:
+      1. Wie viele Stellen sind im Bereich Digitales ausgewiesen, und wie viele davon waren zum 1. September 2026 besetzt?
+      2. Was unternimmt das Ministerium, um die offenen Stellen zu besetzen?
+      3. Wie viele der offenen Stellen sind Stellen für Data Scientists und KI-Fachleute?
+      4. Welche Schulung zur KI-Kompetenz haben die Beschäftigten vor der Freischaltung des KI-Assistenten erhalten?
+      5. Wie lange dauerte die Besetzung einer Stelle im Bereich Digitales im Jahr 2026 durchschnittlich?
+    expect:
+      1: {status: answered, sources: [MV-09]}
+      2: {status: answered, sources: [MV-09]}
+      3: {status: answered, sources: [MV-09]}
+      4: {status: answered, sources: [MV-02]}
+      5: {status: no_record}
+
+  - id: a08
+    text: |
+      Kleine Anfrage des Abgeordneten Matthias Kern (Fraktion der FDP)
+      betreffend Barrierefreiheit der Online-Dienste des Ressorts
+
+      Ich frage die Landesregierung:
+      1. Wie viele Online-Dienste bietet das Ressort an, und wie viele davon erfüllen die Anforderungen der Barrierefreiheit vollständig?
+      2. Welche Maßnahmen sind für die übrigen Online-Dienste vorgesehen, und bis wann?
+      3. Welche Online-Dienste erfüllen die Anforderungen derzeit nicht (bitte einzeln aufführen)?
+      4. Wie viele Beschwerden über fehlende Barrierefreiheit der Online-Dienste sind 2026 eingegangen?
+    expect:
+      1: {status: answered, sources: [MV-10]}
+      2: {status: answered, sources: [MV-10]}
+      3: {status: no_record}
+      4: {status: no_record}
+
+  - id: a09
+    text: |
+      Kleine Anfrage der Abgeordneten Dr. Lena Hoffmeister (Fraktion der CDU)
+      betreffend digitale Souveränität und Rechenzentrumskapazitäten für KI
+
+      Ich frage die Landesregierung:
+      1. Verfügt das Land über eigene GPU-Kapazitäten für generative KI?
+      2. Wie bezieht die Staatsverwaltung KI-Dienste, und wo werden die Daten dabei verarbeitet?
+      3. Welche Lösungen prüft das Ministerium für Daten mit erhöhtem Schutzbedarf?
+      4. Welche Investitionen sind für den Aufbau eigener GPU-Kapazitäten des Landes geplant?
+      5. Wie viele meldepflichtige Sicherheitsvorfälle hat das Ministerium im Jahr 2026 registriert?
+    expect:
+      1: {status: answered, sources: [MV-12]}
+      2: {status: answered, sources: [MV-12]}
+      3: {status: answered, sources: [MV-12]}
+      4: {status: no_record}
+      5: {status: withheld}
+
+  - id: a10
+    text: |
+      Kleine Anfrage des Abgeordneten Sebastian Reuter (Fraktion BÜNDNIS 90/DIE GRÜNEN)
+      betreffend Regeln für generative KI und Mitbestimmung
+
+      Ich frage die Landesregierung:
+      1. Seit wann gilt der Leitfaden für den Einsatz generativer KI in der Staatsverwaltung, und für wen gilt er?
+      2. Welche Prüfungen verlangt der Leitfaden vor dem Einsatz generativer KI?
+      3. Dürfen Antworten der Landesregierung auf parlamentarische Anfragen mit generativer KI erstellt werden, und wenn ja, unter welcher Voraussetzung?
+      4. Wie wird der Personalrat bei der Einführung neuer KI-Werkzeuge im Ministerium beteiligt?
+      5. Wie viele KI-Anwendungen der Staatsverwaltung wurden nach der KI-Verordnung als Hochrisiko-KI-Systeme eingestuft?
+    expect:
+      1: {status: answered, sources: [MV-08]}
+      2: {status: answered, sources: [MV-08]}
+      3: {status: answered, sources: [MV-08]}
+      4: {status: answered, sources: [MV-03, MV-08]}
+      5: {status: no_record}

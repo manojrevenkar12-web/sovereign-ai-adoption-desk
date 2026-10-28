@@ -1,0 +1,35 @@
+# Account health. Usage comes from the workspace's weekly analytics export (see docs/USAGE_EXPORT.md);
+# everything else from the desk's own records.
+
+window_weeks: 4
+score_weights:
+  activation: 0.30       # weekly active users / seats
+  momentum: 0.20         # last window vs the window before
+  breadth: 0.15          # departments where activation clears `department_active_share`
+  depth: 0.10            # messages per weekly active user
+  delivery: 0.25         # use cases on plan (no gate overdue, no blocker older than `blocker_age_weeks`)
+
+targets:
+  activation: 0.55
+  momentum: 0.05          # +5 % window over window is full marks
+  depth_messages_per_active: 25
+  department_active_share: 0.40
+
+bands:
+  healthy: 70
+  watch: 50              # below this: at risk
+
+alerts:
+  activation_floor: 0.35
+  momentum_floor: -0.10
+  blocker_age_weeks: 4
+  approval_expiry_days: 45
+  department_without_champion: true
+
+# Who takes an intervention. The architect stays accountable; these teams execute.
+handoffs:
+  enablement: Training and enablement
+  deployment_eng: OpenAI Deployment Engineering
+  security: OpenAI Security (customer trust)
+  account_director: Account Director
+  product: Product feedback loop

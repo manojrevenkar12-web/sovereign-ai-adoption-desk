@@ -1,0 +1,85 @@
+# Fictional customer. Any resemblance to a real ministry is not intended.
+id: stmv
+name: Staatsministerium für Verwaltungsmodernisierung (fictional)
+level: land
+land: by
+buyer: other
+mission_priorities:
+  - Answer parliamentary questions (Kleine Anfragen) on time and consistently
+  - Modernise the specialist procedures the ministry owns
+  - Make the staff assistant part of daily work in every department
+reviewers: {legal: 2, dsb: 1, isb: 1, procurement: 1, accessibility: 1, customer_pm: 3, provider_team: 1}
+staff_council: {weekday: 1, skip_months: [8], decision_weeks: 2, framework_agreement: true}
+blackouts:
+  - [2026-12-21, 2027-01-06]
+contracts: [chatgpt_enterprise_eu, openai_api_eu]
+framework_agreement: true
+seats: 1200
+champions:
+  Zentralabteilung: Referentin Organisation
+  Digitales: Referent KI
+  Haushalt: Referent Haushaltsplanung
+  Recht: ""
+stakeholders: [Amtschef, CIO, Datenschutzbeauftragter, Personalrat, Informationssicherheitsbeauftragte, Landtagsreferat]
+use_cases:
+  - id: stmv-kleine-anfragen
+    title: Drafting answers to Kleine Anfragen from the ministry's records
+    pattern: drafting_with_sources
+    mission: Draft a first answer to every question of a Kleine Anfrage from the ministry's own records, with citations and the units that must co-sign.
+    mission_weight: critical
+    stage: proof_of_value
+    owner: Leitung Landtagsreferat
+    users: staff
+    staff_users: 60
+    data: [internal, personal]
+    decision_role: information
+    cases_per_year: 900
+    minutes_per_case: 240
+    contract_value_eur: 0
+    pov: kleine_anfrage
+    done: [pov]
+    decision_criteria:
+      - Every drafted statement carries a citation that supports it
+      - No document above the approved classification is used
+      - Drafting time per Anfrage down by a third in the pilot unit
+    blockers:
+      - {text: Staff council asks that drafting logs are not evaluated per person, since: 2026-09-22, owner: customer_pm}
+  - id: stmv-assistent
+    title: ChatGPT Enterprise for all staff
+    pattern: knowledge_assistant
+    mission: Give every member of staff a secure assistant for writing, research and analysis.
+    mission_weight: high
+    stage: adopted
+    owner: CIO
+    users: staff
+    staff_users: 1200
+    data: [internal, personal]
+    decision_role: information
+    cases_per_year: 0
+    minutes_per_case: 0
+  - id: stmv-codex-fachverfahren
+    title: Modernising the grant procedure's code with Codex
+    pattern: code_modernisation
+    mission: Move the grant management procedure off an unsupported Java version with tests written first.
+    mission_weight: normal
+    stage: evaluating
+    owner: Referat IT-Verfahren
+    users: staff
+    staff_users: 12
+    data: [internal]
+    decision_role: information
+    cases_per_year: 1
+    minutes_per_case: 480000
+  - id: stmv-lagebild
+    title: Summaries of classified situation reports
+    pattern: records_summary
+    mission: Summarise classified situation reports for the minister's briefing.
+    mission_weight: high
+    stage: not_pursued
+    owner: Leitungsstab
+    users: staff
+    staff_users: 8
+    data: [vs_nfd]
+    decision_role: information
+    cases_per_year: 250
+    minutes_per_case: 60

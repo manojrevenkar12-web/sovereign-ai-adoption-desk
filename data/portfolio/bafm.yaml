@@ -1,0 +1,82 @@
+# Fictional federal authority. Any resemblance to a real authority is not intended.
+id: bafm
+name: Bundesamt für Fördermittel (fictional)
+level: bund
+land: bund
+buyer: central_government
+mission_priorities:
+  - Pay grants faster without paying them to fraudsters
+  - Answer applicants' questions about programmes consistently
+  - Fill vacancies in specialist roles faster
+reviewers: {legal: 2, dsb: 1, isb: 1, procurement: 1, accessibility: 1, customer_pm: 2, provider_team: 1}
+staff_council: {weekday: 3, skip_months: [7, 8], decision_weeks: 2, framework_agreement: false}
+blackouts:
+  - [2026-12-21, 2027-01-06]
+contracts: [chatgpt_enterprise_eu]
+framework_agreement: false
+seats: 300
+champions:
+  Programme: Referatsleitung Programmsteuerung
+  Prüfung: ""
+  Personal: Referent Personalgewinnung
+stakeholders: [Präsident, CIO, Datenschutzbeauftragte, Personalrat, ISB, Vergabestelle]
+use_cases:
+  - id: bafm-programmauskunft
+    title: Programme enquiry assistant for applicants
+    pattern: enquiry_answering
+    mission: Answer applicants' questions about funding programmes from the published guidelines.
+    mission_weight: high
+    stage: qualified
+    owner: Referatsleitung Programmsteuerung
+    users: public
+    data: [public, personal]
+    decision_role: information
+    cases_per_year: 30000
+    minutes_per_case: 12
+    contract_value_eur: 150000
+  - id: bafm-auffaelligkeiten
+    title: Pattern checks on grant applications
+    pattern: case_prioritisation
+    mission: Flag applications whose figures deviate from the applicant's earlier applications so auditors look first.
+    mission_weight: critical
+    stage: evaluating
+    owner: Referatsleitung Prüfung
+    users: staff
+    staff_users: 30
+    data: [personal]
+    decision_role: pattern_detection
+    matching_datasets: true
+    large_scale: true
+    cases_per_year: 12000
+    minutes_per_case: 25
+    contract_value_eur: 180000
+  - id: bafm-bewerberauswahl
+    title: Shortlisting job applicants
+    pattern: eligibility_assessment
+    mission: Rank applicants for specialist vacancies against the job profile.
+    mission_weight: normal
+    stage: qualified
+    owner: Referat Personal
+    users: staff
+    staff_users: 10
+    data: [personal]
+    decision_role: preparatory
+    purpose_area: employment
+    profiling: true
+    cases_per_year: 4000
+    minutes_per_case: 15
+    contract_value_eur: 100000
+  - id: bafm-hotline-stimmung
+    title: Emotion analysis of hotline staff
+    pattern: case_prioritisation
+    mission: Detect stress and frustration in hotline staff from call audio.
+    mission_weight: normal
+    stage: not_pursued
+    owner: Referat Service
+    users: staff
+    staff_users: 45
+    data: [personal]
+    decision_role: pattern_detection
+    prohibited: [emotion_recognition_workplace]
+    cases_per_year: 0
+    minutes_per_case: 0

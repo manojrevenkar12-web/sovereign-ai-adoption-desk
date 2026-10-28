@@ -1,0 +1,18 @@
+# Approval for the proof of value of drafting answers to Kleine Anfragen (fictional).
+id: APR-STMV-2026-003
+use_case: stmv-kleine-anfragen
+version: 1
+approved_by: [Amtschef, Datenschutzbeauftragter, Informationssicherheitsbeauftragte]
+approved_on: 2026-10-01
+valid_until: 2027-03-31
+classified_as: minimal
+discovery_hash: a6b1fc49661c5b0f
+target: openai_api_eu
+model: gpt-5-mini
+request_classes: [internal, personal]
+document_ceiling: internal              # VS-NfD records never leave the records server
+tools: [search_records, get_record]
+oversight: human_signs_every_output
+forbidden: []
+disclosure: "Entwurf, erstellt mit KI-Unterstützung aus den Akten des Ministeriums. Vor Verwendung fachlich prüfen und mitzeichnen lassen."
+log_retention_days: 180

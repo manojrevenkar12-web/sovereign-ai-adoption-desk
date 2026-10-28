@@ -1,0 +1,80 @@
+# Fictional municipality. Any resemblance to a real town is not intended.
+id: lechfeld
+name: Stadt Lechfeld (fictional)
+level: kommune
+land: by
+buyer: other
+mission_priorities:
+  - A citizens' office (Bürgerbüro) that answers before people queue
+  - Building permits checked for completeness in days, not weeks
+  - Relieve the youth welfare office's caseworkers from paperwork
+reviewers: {legal: 1, dsb: 1, isb: 1, procurement: 1, accessibility: 1, customer_pm: 1, provider_team: 1}
+staff_council: {weekday: 0, skip_months: [8], decision_weeks: 3, framework_agreement: false}
+blackouts:
+  - [2026-12-21, 2027-01-06]
+contracts: []
+framework_agreement: true
+hosting_policy:
+  personal: [openai_for_germany, openai_api_eu]
+seats: 0
+stakeholders: [Oberbürgermeisterin, Hauptamt, Datenschutzbeauftragter, Personalrat, Jugendamt, Bauamt]
+use_cases:
+  - id: lechfeld-buergerbuero
+    title: Citizens' office enquiry assistant
+    pattern: enquiry_answering
+    mission: Answer questions about documents, fees and opening hours from the town's service pages.
+    mission_weight: high
+    stage: qualified
+    owner: Leitung Bürgerbüro
+    users: public
+    data: [public, personal]
+    decision_role: information
+    cases_per_year: 40000
+    minutes_per_case: 5
+    contract_value_eur: 40000
+  - id: lechfeld-bauantrag
+    title: Completeness check of building permit applications
+    pattern: form_extraction
+    mission: List missing documents of a building permit application within a day of receipt.
+    mission_weight: high
+    stage: discovery
+    owner: Leitung Bauamt
+    users: staff
+    staff_users: 25
+    data: [personal]
+    decision_role: procedural
+    cases_per_year: 1800
+    minutes_per_case: 45
+    contract_value_eur: 70000
+  - id: lechfeld-jugendamt-akten
+    title: Case file summaries for the youth welfare office
+    pattern: records_summary
+    mission: Summarise long case files before a case conference so caseworkers spend the time with families.
+    mission_weight: critical
+    stage: qualified
+    owner: Leitung Jugendamt
+    users: staff
+    staff_users: 40
+    data: [personal, special, social]
+    decision_role: information
+    vulnerable_subjects: true
+    cases_per_year: 3000
+    minutes_per_case: 50
+    contract_value_eur: 150000
+    blockers:
+      - {text: "Social data may only run on the sovereign target, which is not yet orderable", since: 2026-09-15, owner: account_director}
+  - id: lechfeld-ratsinfo
+    title: Summaries of council meetings for the town website
+    pattern: records_summary
+    mission: Publish a readable summary of each council meeting the day after.
+    mission_weight: normal
+    stage: discovery
+    owner: Pressestelle
+    users: staff
+    staff_users: 4
+    data: [public]
+    decision_role: information
+    publishes_public_interest_text: true
+    editorial_review: true
+    cases_per_year: 60
+    minutes_per_case: 180

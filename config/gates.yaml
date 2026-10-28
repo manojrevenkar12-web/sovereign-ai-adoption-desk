@@ -1,0 +1,145 @@
+# The path from a qualified use case to production, as gates. A gate applies when its `when` fact
+# is true for the use case (facts come from desk.classify). Dependencies on gates that do not
+# apply are dropped. Durations are planning defaults (weeks of reviewer work); customers may
+# override them in their portfolio file. `role` is the reviewer whose capacity the gate uses.
+
+roles:
+  legal:             {title: Legal and data protection counsel, scope: customer}
+  dsb:               {title: Data protection officer (DSB), scope: customer}
+  isb:               {title: Information security officer (ISB), scope: customer}
+  staff_council:     {title: Staff council (Personalrat), scope: customer, calendar: sessions}
+  procurement:       {title: Procurement office, scope: customer}
+  accessibility:     {title: Accessibility testing, scope: customer}
+  customer_pm:       {title: Customer project lead, scope: customer}
+  provider_team:     {title: Provider team (QMS, technical documentation), scope: customer}
+  deployment_eng:    {title: OpenAI Deployment Engineering, scope: portfolio}   # shared by every customer
+
+gates:
+  pov:
+    title: Proof of value on a blind evaluation set
+    role: deployment_eng
+    weeks: 4
+    when: always
+    evidence: Blind set written before the build, first run pinned, success measures met.
+    note: Runs on public or synthetic data, so it needs no legal gate before it starts.
+  legal_basis:
+    title: Legal basis and purpose documented
+    role: legal
+    weeks: 2
+    when: personal_data
+    source: "Art. 6(1)(e), 6(3) GDPR"
+    evidence: Record of processing activity naming the legal basis and the purpose.
+  dpia:
+    title: Data protection impact assessment
+    role: dsb
+    weeks: 6
+    when: dpia_required
+    depends_on: [legal_basis]
+    source: "Art. 35 GDPR"
+    evidence: DPIA signed by the controller, DSB opinion attached.
+  fria:
+    title: Fundamental rights impact assessment
+    role: legal
+    weeks: 4
+    when: fria_required
+    depends_on: [dpia]
+    source: "Art. 27 AI Act"
+    evidence: FRIA covering Art. 27(1)(a)–(f); market surveillance authority notified (Art. 27(3)).
+    integrated_with: dpia      # lever: Art. 27(4) lets the FRIA complement the DPIA
+    integrated_extra_weeks: 2
+  automated_decision_basis:
+    title: Legal basis for a fully automated decision
+    role: legal
+    weeks: 8
+    when: automated_decision
+    depends_on: [legal_basis]
+    source: "Art. 22 GDPR; § 35a VwVfG"
+    evidence: The provision that allows the automated act, and why no discretion exists.
+  derogation_record:
+    title: Not-high-risk assessment documented and registered
+    role: legal
+    weeks: 2
+    when: derogation
+    source: "Art. 6(4), Art. 49(2) AI Act"
+    evidence: Assessment naming the Art. 6(3) condition; registration receipt.
+  social_data_notice:
+    title: Notification of contractor processing of social data
+    role: legal
+    weeks: 4
+    when: social_data
+    source: "§ 80 SGB X"
+    evidence: Notification to the supervisory authority sent before the award.
+  tax_secrecy_review:
+    title: Tax secrecy disclosure review
+    role: legal
+    weeks: 4
+    when: tax_data
+    source: "§ 30 AO"
+    evidence: Legal review naming the § 30(4) AO ground.
+  staff_council:
+    title: Staff council agreement
+    role: staff_council
+    weeks: 3                   # preparation; the decision then waits for the next session
+    when: staff_council_required
+    source: staff_council
+    evidence: Agreement (Dienstvereinbarung) or consent covering logging and evaluation of use.
+  security_concept:
+    title: Security concept and target attestation review
+    role: isb
+    weeks: 6
+    when: always
+    source: "BSI IT-Grundschutz; BSI C5 attestation of the hosting target"
+    evidence: Security concept for the use case; C5 report of the target reviewed.
+  procurement:
+    title: Procurement
+    role: procurement
+    weeks: route               # from german_law.yaml procurement.routes
+    when: new_contract
+    depends_on: [social_data_notice]
+    source: "§ 106 GWB"
+    evidence: Contract or call-off in place.
+  accessibility:
+    title: Accessibility test of the citizen channel
+    role: accessibility
+    weeks: 3
+    when: citizen_facing
+    depends_on: [pov]
+    source: accessibility
+    evidence: Conformance report against EN 301 549; accessibility statement published.
+  conformity:
+    title: Provider duties for a high-risk system (QMS, documentation, conformity assessment)
+    role: provider_team
+    weeks: 16
+    when: high_risk
+    depends_on: [pov]
+    source: "Art. 16, 17, 43 AI Act"
+    evidence: Technical documentation (Annex IV), EU declaration of conformity.
+  eu_registration:
+    title: Registration in the EU database
+    role: legal
+    weeks: 1
+    when: high_risk
+    depends_on: [conformity, fria]
+    source: "Art. 49, Art. 26(8) AI Act"
+    evidence: Registration receipt for provider and deployer entries.
+  pilot:
+    title: Pilot with real users and data
+    role: customer_pm
+    weeks: 8
+    when: always
+    depends_on: [pov, legal_basis, dpia, fria, automated_decision_basis, derogation_record, social_data_notice,
+                 tax_secrecy_review, staff_council, security_concept, procurement, accessibility]
+    evidence: Pilot results against the success measures; go/no-go recorded.
+  go_live:
+    title: Production go-live
+    role: customer_pm
+    weeks: 0
+    when: always
+    depends_on: [pilot, conformity, eu_registration]
+    evidence: Approval record in force; monitoring and adoption tracking switched on.
+
+# Gates that can never be passed: the use case is stopped at qualification.
+stops:
+  prohibited: The practice is prohibited under Art. 5 AI Act.
+  classified: Classified information cannot be routed to any hosting target in config/targets.yaml.
+  no_target: No hosting target accepts every data class the use case needs.

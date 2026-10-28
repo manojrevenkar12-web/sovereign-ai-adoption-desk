@@ -1,0 +1,18 @@
+# Approval for the proof of value and pilot of the Wohngeld enquiry assistant (fictional).
+id: APR-LWS-2026-007
+use_case: lws-wohngeld-auskunft
+version: 2
+approved_by: [Amtsleitung, Datenschutzbeauftragte, Informationssicherheitsbeauftragter]
+approved_on: 2026-10-12
+valid_until: 2027-04-30
+classified_as: transparency
+discovery_hash: dbfa9a3fa9633254
+target: openai_api_eu
+model: gpt-5-mini
+request_classes: [public, personal]      # personal identifiers are pseudonymised before the model
+document_ceiling: public
+tools: [search_guidance, get_contact, create_handover]
+oversight: handover_on_individual_case
+forbidden: [individual_eligibility, individual_case_status, legal_advice]
+disclosure: "Sie schreiben mit einem KI-Assistenten des Landesamts. Er beantwortet allgemeine Fragen aus unseren veröffentlichten Hinweisen. Fragen zu Ihrem eigenen Antrag gibt er an die Wohngeldstelle weiter."
+log_retention_days: 180
