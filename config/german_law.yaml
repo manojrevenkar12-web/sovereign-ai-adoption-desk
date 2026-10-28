@@ -19,18 +19,18 @@ dpia:
   article: "Art. 35 GDPR; WP 248 rev.01"
   threshold: 2
   criteria:
-    evaluation_or_scoring: {n: 1, text: Evaluation or scoring, including profiling and predicting.}
-    automated_decision_legal_effect: {n: 2, text: Automated decision-making with legal or similarly significant effect.}
-    systematic_monitoring: {n: 3, text: Systematic monitoring of data subjects.}
+    evaluation_or_scoring: {n: 1, text: "Evaluation or scoring, including profiling and predicting."}
+    automated_decision_legal_effect: {n: 2, text: "Automated decision-making with legal or similarly significant effect."}
+    systematic_monitoring: {n: 3, text: "Systematic monitoring of data subjects."}
     sensitive_data: {n: 4, text: "Special categories (Art. 9), criminal data (Art. 10), or data under social, tax or professional secrecy."}
-    large_scale: {n: 5, text: Data processed on a large scale.}
-    matching_datasets: {n: 6, text: Matching or combining datasets.}
-    vulnerable_subjects: {n: 7, text: Data concerning vulnerable data subjects (e.g. benefit claimants, children, asylum seekers).}
-    innovative_technology: {n: 8, text: Innovative use or new technological solutions (AI with personal data).}
-    prevents_rights: {n: 9, text: Processing that prevents data subjects from exercising a right or using a service.}
+    large_scale: {n: 5, text: "Data processed on a large scale."}
+    matching_datasets: {n: 6, text: "Matching or combining datasets."}
+    vulnerable_subjects: {n: 7, text: "Data concerning vulnerable data subjects (e.g. benefit claimants, children, asylum seekers)."}
+    innovative_technology: {n: 8, text: "Innovative use or new technological solutions (AI with personal data)."}
+    prevents_rights: {n: 9, text: "Processing that prevents data subjects from exercising a right or using a service."}
   mandatory_art_35_3:
-    - {key: automated_decision_legal_effect_with_profiling, article: "Art. 35(3)(a)", text: Systematic and extensive evaluation based on automated processing, including profiling, producing legal effects.}
-    - {key: large_scale_sensitive, article: "Art. 35(3)(b)", text: Large-scale processing of special categories or criminal data.}
+    - {key: automated_decision_legal_effect_with_profiling, article: "Art. 35(3)(a)", text: "Systematic and extensive evaluation based on automated processing, including profiling, producing legal effects."}
+    - {key: large_scale_sensitive, article: "Art. 35(3)(b)", text: "Large-scale processing of special categories or criminal data."}
 
 automated_decision:
   article: "Art. 22 GDPR; § 35a VwVfG"

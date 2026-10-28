@@ -1,0 +1,117 @@
+name: ci
+on:
+  push:
+  pull_request:
+
+jobs:
+  desk:
+    name: desk (lint, types, tests on PostgreSQL, dev evaluation, blind sets pinned)
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env: {POSTGRES_PASSWORD: desk}
+        ports: ["5432:5432"]
+        options: --health-cmd pg_isready --health-interval 2s --health-retries 30
+    env:
+      DESK_TEST_DATABASE_URL: postgresql://postgres:desk@localhost:5432/postgres
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.13", cache: pip}
+      - run: pip install -e ".[dev]"
+      - run: scripts/annotate_on_failure.sh ruff check src tests
+      - run: scripts/annotate_on_failure.sh ruff format --check src tests
+      - run: scripts/annotate_on_failure.sh mypy src
+      - run: scripts/annotate_on_failure.sh pytest -q -W ignore
+      - name: dev evaluation of the proofs of value
+        run: scripts/annotate_on_failure.sh desk eval dev
+      - name: blind sets still match their pinned first runs
+        run: |
+          for s in cases-1 pov-1 pov-2; do scripts/annotate_on_failure.sh desk eval "$s"; done
+          python - <<'PY'
+          import json, pathlib
+          for p in sorted(pathlib.Path("reports/heldout").glob("*/first_run.json")):
+              print(f"::notice title={p.parent.name} first run::{json.loads(p.read_text())['headline']}")
+          PY
+      - name: the portfolio, planned
+        run: desk analyse --today 2026-10-28
+
+  oidc:
+    name: OpenID Connect against Keycloak
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.13", cache: pip}
+      - run: pip install -e ".[dev]"
+      - name: start Keycloak with the test realm
+        run: |
+          docker run -d --name kc -p 8180:8080 \
+            -e KC_BOOTSTRAP_ADMIN_USERNAME=admin -e KC_BOOTSTRAP_ADMIN_PASSWORD=admin \
+            -v "$PWD/deploy/keycloak:/opt/keycloak/data/import:ro" \
+            quay.io/keycloak/keycloak:26.0.7 start-dev --import-realm
+          for i in $(seq 1 90); do
+            curl -sf http://localhost:8180/realms/desk/.well-known/openid-configuration >/dev/null && break
+            sleep 2
+          done
+          curl -sf http://localhost:8180/realms/desk/.well-known/openid-configuration | head -c 200
+      - run: scripts/annotate_on_failure.sh pytest -q -m oidc -W ignore
+        env: {DESK_TEST_OIDC_ISSUER: "http://localhost:8180/realms/desk"}
+
+  console:
+    name: console (typecheck, unit tests, build, Playwright against the API and PostgreSQL)
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env: {POSTGRES_PASSWORD: desk, POSTGRES_DB: desk}
+        ports: ["5432:5432"]
+        options: --health-cmd pg_isready --health-interval 2s --health-retries 30
+    env:
+      DESK_DATABASE_URL: postgresql://postgres:desk@localhost:5432/desk
+      DESK_SIGNING_KEY: ${{ github.workspace }}/ci-signing.pem
+      DESK_TODAY: "2026-10-28"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.13", cache: pip}
+      - uses: actions/setup-node@v4
+        with: {node-version: "22", cache: npm, cache-dependency-path: web/package-lock.json}
+      - run: python -m venv .venv && .venv/bin/pip install -e .
+      - name: signing key for dev tokens, database seeded and planned
+        run: |
+          .venv/bin/desk keygen ci-signing.pem
+          .venv/bin/desk db all
+      - working-directory: web
+        run: npm ci --no-audit --no-fund
+      - working-directory: web
+        run: ../scripts/annotate_on_failure.sh npm run typecheck
+      - working-directory: web
+        run: ../scripts/annotate_on_failure.sh npm test
+      - working-directory: web
+        run: npm run build
+      - working-directory: web
+        run: npx playwright install --with-deps chromium
+      - working-directory: web
+        run: ../scripts/annotate_on_failure.sh npx playwright test
+
+  images:
+    name: container images build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -f deploy/api.Dockerfile -t desk-api .
+      - run: docker build -f deploy/console.Dockerfile -t desk-console .
+      - name: the API image starts and answers health checks
+        run: |
+          docker network create desk
+          docker run -d --name db --network desk -e POSTGRES_PASSWORD=desk -e POSTGRES_DB=desk postgres:16-alpine
+          for i in $(seq 1 30); do docker exec db pg_isready -U postgres && break; sleep 1; done
+          mkdir -p keys && openssl genpkey -algorithm ed25519 -out keys/dev.pem && chmod 644 keys/dev.pem
+          docker run -d --name api --network desk -p 8080:8080 -v "$PWD/keys:/keys:ro" -e DESK_SIGNING_KEY=/keys/dev.pem \
+            -e DESK_DATABASE_URL=postgresql://postgres:desk@db:5432/desk -e DESK_AUTH=dev -e DESK_TODAY=2026-10-28 desk-api
+          docker exec api desk db all
+          for i in $(seq 1 30); do curl -sf localhost:8080/readyz && break; sleep 1; done
+          T=$(docker exec api desk token)
+          curl -sf localhost:8080/api/portfolio -H "Authorization: Bearer $T" | head -c 300

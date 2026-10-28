@@ -1,0 +1,57 @@
+{
+  "realm": "desk",
+  "enabled": true,
+  "accessTokenLifespan": 900,
+  "clients": [
+    {
+      "clientId": "desk-architect",
+      "description": "Test client standing in for an architect's directory groups",
+      "enabled": true,
+      "publicClient": false,
+      "secret": "architect-secret-for-ci-only",
+      "serviceAccountsEnabled": true,
+      "standardFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "protocolMappers": [
+        {"name": "audience", "protocol": "openid-connect", "protocolMapper": "oidc-audience-mapper",
+         "config": {"included.custom.audience": "desk-api", "access.token.claim": "true", "id.token.claim": "false"}},
+        {"name": "desk-role", "protocol": "openid-connect", "protocolMapper": "oidc-hardcoded-claim-mapper",
+         "config": {"claim.name": "desk_role", "claim.value": "architect", "jsonType.label": "String", "access.token.claim": "true"}},
+        {"name": "desk-customers", "protocol": "openid-connect", "protocolMapper": "oidc-hardcoded-claim-mapper",
+         "config": {"claim.name": "desk_customers", "claim.value": "lws,stmv,lechfeld,bafm", "jsonType.label": "String", "access.token.claim": "true"}}
+      ]
+    },
+    {
+      "clientId": "desk-customer-lws",
+      "description": "Test client standing in for a customer's CIO office",
+      "enabled": true,
+      "publicClient": false,
+      "secret": "customer-secret-for-ci-only",
+      "serviceAccountsEnabled": true,
+      "standardFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "protocolMappers": [
+        {"name": "audience", "protocol": "openid-connect", "protocolMapper": "oidc-audience-mapper",
+         "config": {"included.custom.audience": "desk-api", "access.token.claim": "true", "id.token.claim": "false"}},
+        {"name": "desk-role", "protocol": "openid-connect", "protocolMapper": "oidc-hardcoded-claim-mapper",
+         "config": {"claim.name": "desk_role", "claim.value": "customer", "jsonType.label": "String", "access.token.claim": "true"}},
+        {"name": "desk-customers", "protocol": "openid-connect", "protocolMapper": "oidc-hardcoded-claim-mapper",
+         "config": {"claim.name": "desk_customers", "claim.value": "lws", "jsonType.label": "String", "access.token.claim": "true"}}
+      ]
+    },
+    {
+      "clientId": "desk-wrong-audience",
+      "enabled": true,
+      "publicClient": false,
+      "secret": "wrong-secret-for-ci-only",
+      "serviceAccountsEnabled": true,
+      "standardFlowEnabled": false,
+      "protocolMappers": [
+        {"name": "desk-role", "protocol": "openid-connect", "protocolMapper": "oidc-hardcoded-claim-mapper",
+         "config": {"claim.name": "desk_role", "claim.value": "architect", "jsonType.label": "String", "access.token.claim": "true"}},
+        {"name": "desk-customers", "protocol": "openid-connect", "protocolMapper": "oidc-hardcoded-claim-mapper",
+         "config": {"claim.name": "desk_customers", "claim.value": "lws", "jsonType.label": "String", "access.token.claim": "true"}}
+      ]
+    }
+  ]
+}

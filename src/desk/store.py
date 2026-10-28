@@ -328,6 +328,7 @@ def _summary(d: dict[str, Any]) -> dict[str, Any]:
                 "endWeek": g["endWeek"],
                 "done": g["done"],
                 "wait": g["wait"],
+                "waitedWeeks": g["waitedWeeks"],
             }
             for g in path.get("gates", [])
         ],

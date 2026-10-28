@@ -1,0 +1,139 @@
+/*
+  The desk reads like a German administrative file: cool paper, ink, and the coloured folder tabs
+  offices use to say how a file must be handled. Every colour has one job:
+    folder colours  = AI Act class (red high-risk, blue transparency, ochre Art. 6(3), green minimal)
+    wax             = the critical path, nothing else
+  One family, Atkinson Hyperlegible Next, chosen for legibility (public-sector audiences).
+*/
+:root {
+  --paper: #eef0ec;
+  --surface: #fafbf8;
+  --surface-sunk: #e4e8e3;
+  --ink: #16202a;
+  --ink-2: #47525c;
+  --ink-3: #6b757d;
+  --rule: #c9cfc9;
+  --rule-strong: #9ea7a1;
+  --focus: #1f4e79;
+
+  --folder-high: #a1271b;
+  --folder-transparency: #1f4e79;
+  --folder-derogation: #8a6200;
+  --folder-minimal: #2e6b47;
+  --folder-prohibited: #16202a;
+
+  --wax: #9b1c31;
+  --done: #2e6b47;
+  --wait: #8a6200;
+  --danger: #a1271b;
+
+  --font: "Atkinson Hyperlegible Next", ui-sans-serif, system-ui, sans-serif;
+
+  --step--1: 0.8125rem;
+  --step-0: 0.9375rem;
+  --step-1: 1.125rem;
+  --step-2: 1.4rem;
+  --step-3: 1.95rem;
+  --step-4: 2.6rem;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4.5rem;
+
+  --radius-tab: 0.35rem;
+  --radius-card: 0.15rem;
+  --rail: 17rem;
+  --measure: 68ch;
+  --week: 0.95rem; /* width of one week on the path strips */
+  --strip-height: 1.6rem;
+  --shadow-file: 0 1px 0 var(--rule), 0 6px 18px -14px rgba(22, 32, 42, 0.35);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #101519;
+    --surface: #171e24;
+    --surface-sunk: #0c1013;
+    --ink: #e7eae5;
+    --ink-2: #b4bcb6;
+    --ink-3: #8f9993;
+    --rule: #2b353d;
+    --rule-strong: #46525b;
+    --focus: #8cb8e3;
+    --folder-high: #e0705f;
+    --folder-transparency: #79a9d8;
+    --folder-derogation: #d9ad4f;
+    --folder-minimal: #73b78e;
+    --folder-prohibited: #e7eae5;
+    --wax: #e2687c;
+    --done: #73b78e;
+    --wait: #d9ad4f;
+    --danger: #e0705f;
+    --shadow-file: 0 1px 0 var(--rule), 0 8px 20px -14px rgba(0, 0, 0, 0.8);
+  }
+}
+
+:root[data-theme="dark"] {
+  --paper: #101519;
+  --surface: #171e24;
+  --surface-sunk: #0c1013;
+  --ink: #e7eae5;
+  --ink-2: #b4bcb6;
+  --ink-3: #8f9993;
+  --rule: #2b353d;
+  --rule-strong: #46525b;
+  --focus: #8cb8e3;
+  --folder-high: #e0705f;
+  --folder-transparency: #79a9d8;
+  --folder-derogation: #d9ad4f;
+  --folder-minimal: #73b78e;
+  --folder-prohibited: #e7eae5;
+  --wax: #e2687c;
+  --done: #73b78e;
+  --wait: #d9ad4f;
+  --danger: #e0705f;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 100%;
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

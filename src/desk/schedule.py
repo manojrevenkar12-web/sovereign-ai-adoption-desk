@@ -286,7 +286,7 @@ def plan_portfolio(
         path.ready = slots["go_live"].end
         path.go_live = path.ready
         if cl.facts.get("target_planned"):
-            path.waiting_for = f"{cl.hosting.chosen} availability (planned)"
+            path.waiting_for = str(settings.targets()["targets"][cl.hosting.chosen]["title"])
             path.go_live = None
         path.critical = _critical(slots)
         for gid in path.critical:

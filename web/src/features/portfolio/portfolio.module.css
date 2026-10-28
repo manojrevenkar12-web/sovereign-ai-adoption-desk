@@ -1,0 +1,485 @@
+.page {
+  padding: var(--space-6) var(--space-4);
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: var(--rail) minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+/* ---------------------------------------------------------------- customer rail */
+
+.rail {
+  border-right: 1px solid var(--rule);
+  padding: var(--space-6) 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-sunk);
+}
+
+.railItem {
+  appearance: none;
+  border: 0;
+  border-left: 3px solid transparent;
+  background: none;
+  text-align: left;
+  padding: var(--space-3) var(--space-5);
+  cursor: pointer;
+  display: grid;
+  gap: var(--space-1);
+}
+
+.railItem:hover {
+  background: var(--surface);
+}
+
+.railActive {
+  border-left-color: var(--ink);
+  background: var(--surface);
+}
+
+.railName {
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.railFacts {
+  display: flex;
+  gap: var(--space-3);
+  font-size: var(--step--1);
+  color: var(--ink-2);
+}
+
+.band[data-band="at_risk"] {
+  color: var(--danger);
+  font-weight: 700;
+}
+
+.band[data-band="watch"] {
+  color: var(--wait);
+  font-weight: 700;
+}
+
+/* ---------------------------------------------------------------- header */
+
+.main {
+  padding: var(--space-6) var(--space-6) var(--space-8);
+  min-width: 0;
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-5);
+  flex-wrap: wrap;
+  padding-bottom: var(--space-5);
+  border-bottom: 1px solid var(--rule);
+}
+
+.name {
+  font-size: var(--step-3);
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin: 0;
+  max-width: 24ch;
+}
+
+.context {
+  color: var(--ink-2);
+  margin: var(--space-2) 0 var(--space-4);
+}
+
+.missions {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: var(--space-1);
+  max-width: var(--measure);
+}
+
+.missions li::before {
+  content: "→ ";
+  color: var(--ink-3);
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.action,
+.actionPrimary {
+  appearance: none;
+  border: 1px solid var(--ink);
+  background: transparent;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-card);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.actionPrimary {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.action:hover {
+  background: var(--surface);
+}
+
+/* ---------------------------------------------------------------- board */
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 19rem;
+  gap: var(--space-6);
+  margin-top: var(--space-5);
+  align-items: start;
+}
+
+.boardTitle,
+.panelTitle {
+  font-size: var(--step-1);
+  font-weight: 800;
+  margin: 0 0 var(--space-2);
+}
+
+.legend {
+  display: flex;
+  gap: var(--space-5);
+  flex-wrap: wrap;
+  font-size: var(--step--1);
+  color: var(--ink-2);
+  margin: 0 0 var(--space-3);
+}
+
+.legend span::before {
+  content: "";
+  display: inline-block;
+  width: 1.6rem;
+  height: 0;
+  vertical-align: middle;
+  margin-right: var(--space-2);
+}
+
+.legendThread::before {
+  border-top: 3px solid var(--wax);
+}
+
+.legendWait::before {
+  border-top: 2px dotted var(--wait);
+}
+
+.legendDone::before {
+  border-top: 6px solid var(--done);
+}
+
+.boardScroll {
+  overflow-x: auto;
+  border: 1px solid var(--rule);
+  background: var(--surface);
+  box-shadow: var(--shadow-file);
+}
+
+.board {
+  min-width: calc(22rem + var(--horizon));
+}
+
+.axisRow,
+.row {
+  display: grid;
+  grid-template-columns: 22rem var(--horizon);
+}
+
+.axisRow {
+  border-bottom: 1px solid var(--rule);
+  font-size: var(--step--1);
+  color: var(--ink-3);
+}
+
+.metaHead {
+  position: sticky;
+  left: 0;
+  background: var(--surface);
+  padding: var(--space-2) var(--space-4);
+  z-index: 1;
+}
+
+.axis {
+  position: relative;
+  height: 2rem;
+}
+
+.axis span {
+  position: absolute;
+  top: var(--space-2);
+  padding-left: var(--space-1);
+  border-left: 1px solid var(--rule);
+  white-space: nowrap;
+}
+
+.row {
+  border-bottom: 1px solid var(--rule);
+  min-height: 4rem;
+}
+
+.row:last-child {
+  border-bottom: 0;
+}
+
+.meta {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: var(--surface);
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-right: 1px solid var(--rule);
+}
+
+.rank {
+  font-size: var(--step-1);
+  font-weight: 800;
+  color: var(--ink-3);
+}
+
+.title {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 0;
+  text-align: left;
+  font-weight: 700;
+  line-height: 1.3;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: var(--rule-strong);
+  text-underline-offset: 3px;
+}
+
+.title:hover {
+  text-decoration-color: var(--ink);
+}
+
+.sub {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+  font-size: var(--step--1);
+  color: var(--ink-2);
+  margin-top: var(--space-1);
+}
+
+.waiting {
+  color: var(--wait);
+  font-weight: 600;
+}
+
+.cell {
+  display: flex;
+  align-items: center;
+}
+
+.strip {
+  display: block;
+  overflow: visible;
+}
+
+.thread {
+  stroke: var(--wax);
+  stroke-width: 2;
+}
+
+.wait {
+  stroke: var(--wait);
+  stroke-width: 2;
+  stroke-dasharray: 2 3;
+}
+
+.bar {
+  fill: var(--rule-strong);
+}
+
+.barCritical {
+  fill: var(--wax);
+}
+
+.barDone {
+  fill: var(--done);
+}
+
+.end rect {
+  fill: var(--ink);
+}
+
+.endOpen rect {
+  fill: var(--surface);
+  stroke: var(--wait);
+  stroke-width: 2;
+}
+
+/* ---------------------------------------------------------------- side panel */
+
+.panel {
+  border-top: 3px solid var(--ink);
+  padding-top: var(--space-3);
+}
+
+.panelSub {
+  font-size: var(--step-0);
+  font-weight: 700;
+  margin: var(--space-5) 0 var(--space-2);
+}
+
+.muted {
+  color: var(--ink-2);
+}
+
+.bottlenecks,
+.levers {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.bottlenecks li,
+.levers li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  border-bottom: 1px dotted var(--rule);
+  padding-bottom: var(--space-2);
+}
+
+.levers strong {
+  color: var(--done);
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------- account plan drawer */
+
+.drawer {
+  position: fixed;
+  inset: 0 0 0 auto;
+  width: min(46rem, 100vw);
+  background: var(--surface);
+  border-left: 1px solid var(--rule);
+  box-shadow: -20px 0 40px -30px rgba(0, 0, 0, 0.5);
+  overflow-y: auto;
+  padding: var(--space-6);
+  z-index: 10;
+}
+
+.close {
+  appearance: none;
+  border: 1px solid var(--rule-strong);
+  background: none;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-card);
+  cursor: pointer;
+  float: right;
+}
+
+.plan h2 {
+  font-size: var(--step-2);
+  line-height: 1.2;
+  margin: 0 0 var(--space-3);
+  max-width: 28ch;
+}
+
+.plan h3 {
+  font-size: var(--step-1);
+  margin: var(--space-6) 0 var(--space-2);
+}
+
+.plan p {
+  max-width: var(--measure);
+  margin: 0 0 var(--space-2);
+}
+
+.bullet {
+  padding-left: var(--space-4);
+  text-indent: calc(-1 * var(--space-4));
+}
+
+.bullet::before {
+  content: "– ";
+}
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+.plan table {
+  border-collapse: collapse;
+  font-size: var(--step--1);
+  width: 100%;
+}
+
+.plan th,
+.plan td {
+  text-align: left;
+  border-bottom: 1px solid var(--rule);
+  padding: var(--space-2);
+  vertical-align: top;
+}
+
+/* ---------------------------------------------------------------- narrow screens */
+
+@media (max-width: 64rem) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 48rem) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .rail {
+    flex-direction: row;
+    overflow-x: auto;
+    padding: 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .railItem {
+    border-left: 0;
+    border-bottom: 3px solid transparent;
+    min-width: 13rem;
+  }
+
+  .railActive {
+    border-bottom-color: var(--ink);
+  }
+
+  .main {
+    padding: var(--space-5) var(--space-4) var(--space-7);
+  }
+
+  .name {
+    font-size: var(--step-2);
+  }
+
+  .axisRow,
+  .row {
+    grid-template-columns: 14rem var(--horizon);
+  }
+
+  .board {
+    min-width: calc(14rem + var(--horizon));
+  }
+}

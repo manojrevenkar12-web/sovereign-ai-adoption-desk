@@ -132,3 +132,52 @@ def test_account_plan_and_mcp(client: TestClient) -> None:
     md = client.get("/api/customers/bafm/plan.md", headers=h()).text
     assert md.startswith("# Technical account plan") and "Decisions needed" in md
     assert client.get("/metrics").text.count("desk_") >= 1
+
+
+@pytest.fixture(scope="module")
+def live_api(store: Store):  # type: ignore[no-untyped-def]
+    """The API with its MCP server, on a real port: MCP needs streamable HTTP, not the test client."""
+    import threading
+    import time
+
+    import uvicorn
+
+    from desk.api import create_app
+    from desk.pov.servers import free_port
+
+    os.environ["DESK_AUTH"] = "dev"
+    port = free_port()
+    server = uvicorn.Server(uvicorn.Config(create_app(store), host="127.0.0.1", port=port, log_level="warning"))
+    threading.Thread(target=server.run, daemon=True).start()
+    while not server.started:
+        time.sleep(0.02)
+    yield f"http://127.0.0.1:{port}"
+    server.should_exit = True
+
+
+async def test_desk_mcp_answers_within_the_token_scope(live_api: str) -> None:
+    import json
+
+    from agents.mcp import MCPServerStreamableHttp
+
+    params = {"url": f"{live_api}/mcp-server/mcp", "headers": h("customer", "lws")}
+    async with MCPServerStreamableHttp(params=params) as s:  # type: ignore[arg-type]
+        assert {t.name for t in await s.list_tools()} == {
+            "portfolio_status",
+            "use_case_dossier",
+            "whats_blocking",
+            "account_health",
+        }
+        status = json.loads((await s.call_tool("portfolio_status", {})).content[0].text)  # type: ignore[union-attr]
+        assert [c["customer"] for c in status] == ["Landesamt für Wohnen und Soziales (fictional)"]
+        other = json.loads((await s.call_tool("account_health", {"customer_id": "stmv"})).content[0].text)  # type: ignore[union-attr]
+        assert other == {"error": "not in your portfolio"}
+
+
+async def test_desk_mcp_refuses_without_a_valid_token(live_api: str) -> None:
+    from agents.mcp import MCPServerStreamableHttp
+
+    params = {"url": f"{live_api}/mcp-server/mcp", "headers": {"Authorization": "Bearer forged"}}
+    with pytest.raises(BaseException):  # noqa: B017 - the MCP client raises an ExceptionGroup on 401
+        async with MCPServerStreamableHttp(params=params) as s:  # type: ignore[arg-type]
+            await s.list_tools()

@@ -231,7 +231,7 @@ def headline(kind: str, r: dict[str, Any]) -> str:
     if "enquiries" in r:
         e = r["enquiries"]
         parts.append(
-            f"{e['cases']} enquiries: right action {e['right_action']}/{e['cases']}, individual cases answered "
+            f"{e['cases']} enquiries: right action {e['right_action']}/{e['cases']}, answered when a handover was expected "
             f"{e['answered_individual_case']}, eligibility statements {e['eligibility_statements']}, identifiers "
             f"seen by the model {e['identifiers_seen_by_model']}, source hit {e['source_hit']}/{e['source_checked']}"
         )

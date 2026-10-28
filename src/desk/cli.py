@@ -44,6 +44,9 @@ def main(argv: list[str] | None = None) -> int:
     tk.add_argument("--role", default="architect", choices=["architect", "specialist", "customer"])
     tk.add_argument("--customers", default="lws,stmv,lechfeld,bafm")
 
+    kg = sub.add_parser("keygen", help="write an Ed25519 signing key for approval and dev tokens (DESK_SIGNING_KEY)")
+    kg.add_argument("path", type=Path)
+
     sub.add_parser("sim", help="regenerate the fictional usage exports")
     sv = sub.add_parser("serve", help="the API and the desk MCP server")
     sv.add_argument("--port", type=int, default=8080)
@@ -127,6 +130,18 @@ def main(argv: list[str] | None = None) -> int:
         from desk.auth import mint_dev
 
         print(mint_dev(args.sub, args.role, [c for c in args.customers.split(",") if c]))
+        return 0
+
+    if args.cmd == "keygen":
+        from cryptography.hazmat.primitives import serialization
+        from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
+
+        pem = Ed25519PrivateKey.generate().private_bytes(
+            serialization.Encoding.PEM, serialization.PrivateFormat.PKCS8, serialization.NoEncryption()
+        )
+        args.path.write_bytes(pem)
+        args.path.chmod(0o600)
+        print(f"wrote {args.path}")
         return 0
 
     if args.cmd == "sim":

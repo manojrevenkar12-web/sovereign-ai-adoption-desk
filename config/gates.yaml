@@ -11,7 +11,7 @@ roles:
   procurement:       {title: Procurement office, scope: customer}
   accessibility:     {title: Accessibility testing, scope: customer}
   customer_pm:       {title: Customer project lead, scope: customer}
-  provider_team:     {title: Provider team (QMS, technical documentation), scope: customer}
+  provider_team:     {title: "Provider team (QMS, technical documentation)", scope: customer}
   deployment_eng:    {title: OpenAI Deployment Engineering, scope: portfolio}   # shared by every customer
 
 gates:

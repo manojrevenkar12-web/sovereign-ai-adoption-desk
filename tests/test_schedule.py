@@ -95,7 +95,7 @@ def test_done_gates_take_no_time(portfolio) -> None:  # type: ignore[no-untyped-
 def test_planned_target_has_a_ready_date_but_no_go_live(portfolio) -> None:  # type: ignore[no-untyped-def]
     a = analyse(portfolio, date(2026, 10, 28), price_levers=False)
     p = a.plan.paths["lechfeld-jugendamt-akten"]
-    assert p.go_live is None and p.ready > 0 and "openai_for_germany" in (p.waiting_for or "")
+    assert p.go_live is None and p.ready > 0 and "OpenAI for Germany" in (p.waiting_for or "")
 
 
 def test_finished_and_stopped_use_cases_are_not_planned(portfolio) -> None:  # type: ignore[no-untyped-def]

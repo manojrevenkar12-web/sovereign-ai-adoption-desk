@@ -1,0 +1,23 @@
+# Local stack: PostgreSQL, the API (dev tokens) and the console.
+#   openssl genpkey -algorithm ed25519 -out deploy/dev.pem && chmod 644 deploy/dev.pem
+#   docker compose up -d && docker compose exec api desk db all
+#   open "http://localhost:8081/?token=$(docker compose exec api desk token)"
+services:
+  db:
+    image: postgres:16-alpine
+    environment: {POSTGRES_PASSWORD: desk, POSTGRES_DB: desk}
+    healthcheck: {test: ["CMD", "pg_isready", "-U", "postgres"], interval: 2s, retries: 30}
+  api:
+    build: {context: ., dockerfile: deploy/api.Dockerfile}
+    environment:
+      DESK_DATABASE_URL: postgresql://postgres:desk@db:5432/desk
+      DESK_AUTH: dev
+      DESK_TODAY: "2026-10-28"
+      DESK_SIGNING_KEY: /keys/dev.pem
+    volumes: ["./deploy/dev.pem:/keys/dev.pem:ro"]
+    depends_on: {db: {condition: service_healthy}}
+    ports: ["8080:8080"]
+  console:
+    build: {context: ., dockerfile: deploy/console.Dockerfile}
+    depends_on: [api]
+    ports: ["8081:8081"]

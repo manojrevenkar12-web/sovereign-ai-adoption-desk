@@ -78,8 +78,8 @@ derogations:
     article: "Art. 6(3)(d)"
     text: Performs a preparatory task to an assessment relevant for the purposes of the Annex III use case.
 derogation_duties:
-  - {article: "Art. 6(4)", text: Document the assessment that the system is not high-risk before it is placed on the market or put into service.}
-  - {article: "Art. 49(2)", text: Register the system in the EU database (simplified registration reinstated by Regulation (EU) 2026/1744).}
+  - {article: "Art. 6(4)", text: "Document the assessment that the system is not high-risk before it is placed on the market or put into service."}
+  - {article: "Art. 49(2)", text: "Register the system in the EU database (simplified registration reinstated by Regulation (EU) 2026/1744)."}
 
 # Who the public body is under the Act decides which duties land on it.
 roles:
@@ -94,24 +94,24 @@ roles:
     text: The authority uses an AI system under its authority in the course of its work.
 
 high_risk_provider_duties:
-  - {article: "Art. 9", text: Risk management system across the lifecycle.}
-  - {article: "Art. 10", text: Data governance for training, validation and test data.}
-  - {article: "Art. 11", text: Technical documentation (Annex IV).}
-  - {article: "Art. 12", text: Automatic logging of events.}
-  - {article: "Art. 14", text: Designed for effective human oversight.}
-  - {article: "Art. 15", text: Accuracy, robustness and cybersecurity, declared and tested.}
-  - {article: "Art. 17", text: Quality management system.}
-  - {article: "Art. 43", text: Conformity assessment (internal control, Annex VI, for Annex III points 2 to 8).}
-  - {article: "Art. 49(1)", text: Registration in the EU database before putting into service.}
-  - {article: "Art. 72", text: Post-market monitoring.}
+  - {article: "Art. 9", text: "Risk management system across the lifecycle."}
+  - {article: "Art. 10", text: "Data governance for training, validation and test data."}
+  - {article: "Art. 11", text: "Technical documentation (Annex IV)."}
+  - {article: "Art. 12", text: "Automatic logging of events."}
+  - {article: "Art. 14", text: "Designed for effective human oversight."}
+  - {article: "Art. 15", text: "Accuracy, robustness and cybersecurity, declared and tested."}
+  - {article: "Art. 17", text: "Quality management system."}
+  - {article: "Art. 43", text: "Conformity assessment (internal control, Annex VI, for Annex III points 2 to 8)."}
+  - {article: "Art. 49(1)", text: "Registration in the EU database before putting into service."}
+  - {article: "Art. 72", text: "Post-market monitoring."}
 high_risk_deployer_duties:
-  - {article: "Art. 26(2)", text: Assign human oversight to people with the competence, training and authority to exercise it.}
-  - {article: "Art. 26(6)", text: Keep the automatically generated logs for at least six months.}
-  - {article: "Art. 26(7)", text: Inform workers' representatives and affected workers before using a high-risk system at the workplace.}
-  - {article: "Art. 26(8)", text: Public authorities register their use in the EU database (Art. 49).}
-  - {article: "Art. 26(11)", text: Inform people that they are subject to decisions made or assisted by the system.}
-  - {article: "Art. 27", text: Fundamental rights impact assessment before first use (bodies governed by public law).}
-  - {article: "Art. 86", text: Right of affected persons to a clear and meaningful explanation of the system's role in the decision.}
+  - {article: "Art. 26(2)", text: "Assign human oversight to people with the competence, training and authority to exercise it."}
+  - {article: "Art. 26(6)", text: "Keep the automatically generated logs for at least six months."}
+  - {article: "Art. 26(7)", text: "Inform workers' representatives and affected workers before using a high-risk system at the workplace."}
+  - {article: "Art. 26(8)", text: "Public authorities register their use in the EU database (Art. 49)."}
+  - {article: "Art. 26(11)", text: "Inform people that they are subject to decisions made or assisted by the system."}
+  - {article: "Art. 27", text: "Fundamental rights impact assessment before first use (bodies governed by public law)."}
+  - {article: "Art. 86", text: "Right of affected persons to a clear and meaningful explanation of the system's role in the decision."}
 
 transparency:
   interacts_with_public:
@@ -122,4 +122,4 @@ transparency:
     text: AI-generated text published to inform the public on matters of public interest is disclosed as such, unless it underwent human review or editorial control and a person holds editorial responsibility.
 
 always:
-  - {article: "Art. 4", text: Take measures to support the AI literacy of staff who operate and use AI systems (as softened by Regulation (EU) 2026/1744).}
+  - {article: "Art. 4", text: "Take measures to support the AI literacy of staff who operate and use AI systems (as softened by Regulation (EU) 2026/1744)."}

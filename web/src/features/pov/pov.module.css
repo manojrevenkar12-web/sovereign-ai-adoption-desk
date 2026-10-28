@@ -1,0 +1,139 @@
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: var(--space-7);
+}
+
+.h2 {
+  font-size: var(--step-1);
+  font-weight: 800;
+  margin: 0 0 var(--space-3);
+}
+
+.small {
+  font-size: var(--step--1);
+  color: var(--ink-2);
+  max-width: var(--measure);
+}
+
+.scope {
+  border-top: 3px solid var(--ink);
+  padding-top: var(--space-3);
+}
+
+.kv {
+  display: grid;
+  gap: var(--space-3);
+  margin: var(--space-4) 0;
+}
+
+.kv dt {
+  font-size: var(--step--1);
+  color: var(--ink-3);
+}
+
+.kv dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+.ok {
+  color: var(--done);
+  font-weight: 700;
+}
+
+.problems {
+  border-left: 3px solid var(--danger);
+  padding-left: var(--space-4);
+}
+
+.form {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.label {
+  font-weight: 700;
+}
+
+.input {
+  font: inherit;
+  width: 100%;
+  padding: var(--space-3);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius-card);
+  background: var(--paper);
+  color: var(--ink);
+  resize: vertical;
+}
+
+.send {
+  justify-self: start;
+  appearance: none;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-card);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.send:disabled {
+  opacity: 0.55;
+  cursor: progress;
+}
+
+.result {
+  margin-top: var(--space-5);
+  border-top: 1px solid var(--rule);
+  padding-top: var(--space-4);
+}
+
+.verdictAnswer,
+.verdictHandover {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: baseline;
+  font-weight: 800;
+  font-size: var(--step-1);
+  margin: 0 0 var(--space-3);
+}
+
+.verdictAnswer {
+  color: var(--done);
+}
+
+.verdictHandover {
+  color: var(--wait);
+}
+
+.verdictAnswer span,
+.verdictHandover span {
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+.statements {
+  margin: 0 0 var(--space-3);
+  padding-left: var(--space-5);
+  display: grid;
+  gap: var(--space-2);
+  max-width: var(--measure);
+}
+
+.cite {
+  font-size: var(--step--1);
+  font-weight: 700;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+
+@media (max-width: 56rem) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-6);
+  }
+}
