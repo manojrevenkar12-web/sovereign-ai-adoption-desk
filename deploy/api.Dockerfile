@@ -12,7 +12,7 @@ WORKDIR /app
 COPY config ./config
 COPY data ./data
 COPY migrations ./migrations
-ENV DESK_CONFIG=/app/config DESK_DATA=/app/data PYTHONUNBUFFERED=1
+ENV DESK_ROOT=/app DESK_CONFIG=/app/config DESK_DATA=/app/data PYTHONUNBUFFERED=1
 USER 10001
 EXPOSE 8080
 HEALTHCHECK CMD python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/healthz')"

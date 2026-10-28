@@ -9,7 +9,8 @@ from typing import Any
 
 import yaml
 
-ROOT = Path(__file__).resolve().parents[2]
+# The repository (or, in the image, /app): config, data, migrations, heldout and reports live under it.
+ROOT = Path(os.environ.get("DESK_ROOT", Path(__file__).resolve().parents[2]))
 CONFIG_DIR = Path(os.environ.get("DESK_CONFIG", ROOT / "config"))
 DATA_DIR = Path(os.environ.get("DESK_DATA", ROOT / "data"))
 

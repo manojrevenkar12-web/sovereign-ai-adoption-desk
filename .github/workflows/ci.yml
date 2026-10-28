@@ -105,6 +105,8 @@ jobs:
       - run: docker build -f deploy/console.Dockerfile -t desk-console .
       - name: the API image starts and answers health checks
         run: |
+          trap 'echo "::error::$(docker logs api 2>&1 | tail -15 | tr "\n" " " | cut -c1-900)"' ERR
+          set -e
           docker network create desk
           docker run -d --name db --network desk -e POSTGRES_PASSWORD=desk -e POSTGRES_DB=desk postgres:16-alpine
           for i in $(seq 1 30); do docker exec db pg_isready -U postgres && break; sleep 1; done
